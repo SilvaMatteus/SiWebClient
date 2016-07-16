@@ -1,0 +1,30 @@
+{
+  "name": "Reader",
+  "authors": [
+    "Matteus Silva <silvamatteus@lsd.ufcg.edu.br>"
+  ],
+  "description": "Reader Web App",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "ufcg",
+    "short",
+    "course",
+    "angular",
+    "document"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
+    "angular-resource": "^1.5.1"
+  }
+}
