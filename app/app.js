@@ -22,5 +22,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('app.home', {
             url: '/home',
             templateUrl: '/views/home.html'
+        })
+        .state('app.register', {
+            url: '/register',
+            templateUrl: '/views/register.html'
         });
 });
