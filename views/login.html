@@ -1,85 +1,78 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                </button>
-            <a class="navbar-brand" href="#">Reader 1.0</a>
-        </div>
-    </div>
-</nav>
+<div ng-controller="loginController">
+    <!-- Form -->
+    <div class="container">
+        <div class="row">
+            <h2 class="font-bold text-center">Welcome to Reader*</h2>
+            <br>
+            <div class="col-lg-8 text-justify">
+                <p>
+                    <strong>Perfectly designed and precisely prepared to read and write your documents.</strong>
+                </p>
 
-<!-- Form -->
-<div class="container">
-    <div class="row">
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                    text ever since the 1500s.
+                </p>
 
-        <div class="col-lg-8 text-justified">
-            <h2 class="font-bold">Welcome to Reader</h2>
+                <p>
+                    When an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
 
-            <p>
-                Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-            </p>
+                <p>
+                    <small>*It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</small>
+                </p>
+                <div>
+                    <h3> Free space: {{ count }}MB</h3>
+                </div>
+                <div class="progress progress-striped active">
+                    <div class="progress-bar" style="width: {{ perc }}%"></div>
+                </div>
+                <div class="text-right">
+                    <small>...and to infinity and beyond</small>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox-content text-center">
+                    <h2>Log in</h2>
+                    <form class="m-t" role="form" action="index.html">
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Username" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" required="">
+                        </div>
+                        <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-            <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
-            </p>
+                        <a ui-sref="app.home"> Live Demo, </a>
 
-            <p>
-                When an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            </p>
-
-            <p>
-                <small>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</small>
-            </p>
-
-        </div>
-        <div class="col-lg-4">
-            <div class="ibox-content text-center">
-                <h2>Log in</h2>
-                <form class="m-t" role="form" action="index.html">
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Username or e-mail" required="">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" required="">
-                    </div>
-                    <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-                    <a ui-sref="app.home"> Live Demo, </a>
-
-                    <a href="#">
-                        <small>Forgot password?</small>
-                    </a>
-                    <p class="text-muted text-center">
-                        <small>Do not have an account?</small>
-                        <a class="btn btn-sm btn-white btn-block" ui-sref="app.register">Create an account</a>
-                    </p>
-                </form>
+                        <a href="#">
+                            <small>Forgot password?</small>
+                        </a>
+                        <p class="text-muted text-center">
+                            <small>Do not have an account?</small>
+                            <a class="btn btn-sm btn-white btn-block" ui-sref="app.register">Create an account</a>
+                        </p>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
         <div>
-            <blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-            </blockquote>
+            <div>
+                <blockquote>
+                    <p>Amazing editor, perfect to daily tasks.<br>
+                        Without doubt the best app of the year.</p>
+                    <small>Someone famous in <cite title="Source Title">Silicon Valley</cite></small>
+                </blockquote>
+            </div>
         </div>
-        <div class="progress progress-striped active">
-            <div class="progress-bar" style="width: 45%"></div>
-        </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-md-6">
-            Copyright Grupo de SI
-        </div>
-        <div class="col-md-6 text-right">
-            <small>© 2016</small>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                Copyright Team Reader
+            </div>
+            <div class="col-md-6 text-right">
+                <small>It is not just for a grade © 2016</small>
+            </div>
         </div>
     </div>
 </div>
