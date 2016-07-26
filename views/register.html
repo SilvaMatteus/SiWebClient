@@ -12,56 +12,55 @@
     </div>
 </nav>
 
-<div class="container text-center">
-    <div class="row">
-        <div class="col-lg-4">
-            <h2> 100% Free </h2>
-            <p> or until we get greedy </p>
+<div class="row">
+    <div class="container text-center">
+    <div class="col-lg-4">
+        <h2> 100% Free </h2>
+        <p> or until we get greedy </p>
+    </div>
+
+    <!-- Form to register! -->
+    <div class="col-lg-4">
+        <div class="ibox-content text-left">
+            <h2>Create your account</h2>
+            <form class="m-t" role="form">
+
+                <div class="form-group">
+                    <label for="input-name"> Username </label>
+                    <input type="text" ng-model="newUser.name" class="form-control" placeholder="Username" id="input-name" required="">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-email"> E-mail address </label>
+                    <input type="email" ng-model="newUser.email" class="form-control" placeholder="your.email@example.com" id="input-email" required="">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-pwd"> Password </label>
+                    <input type="password" ng-model="newUser.password" class="form-control" placeholder="Password" id="input-pwd" required="">
+                </div>
+
+                <input type="submit" ng-click="save()" value="Save" class="btn btn-primary block full-width m-b">Create account</input>
+            </form>
         </div>
+    </div>
 
-        <!-- Form to register! -->
-        <div class="col-lg-4">
-            <div class="ibox-content text-left">
-                <h2>Create your account</h2>
-                <form class="m-t" role="form" action="index.html">
-
-                    <div class="form-group">
-                        <label for="input-name"> Username </label>
-                        <input type="text" class="form-control" placeholder="Username" id="input-name" required="">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="input-email"> E-mail address </label>
-                        <input type="email" class="form-control" placeholder="your.email@example.com" id="input-email" required="">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="input-pwd"> Password </label>
-                        <input type="password" class="form-control" placeholder="Password" id="input-pwd" required="">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary block full-width m-b">Create account</button>
-                </form>
-            </div>
+    <div class="col-lg-4">
+        <div class="text-center">
+            <h2>Write anything</h2>
         </div>
-
-        <div class="col-lg-4">
-            <div class="text-center">
-                <h2>Write anything</h2>
-            </div>
-            <div class="text-center">
-                <h3 class="text-primary">Cup Cake draft</h3>
-            </div>
-            <div class="text-justify">
-                <p>Carefully dip tops of cupcake into the frosting, give a slight twist and remove. Finish off with a swirl of a knife if needed.
-                    Dip frosted cupcakes into bowls of nuts, colored sugar, sprinkles, or other decors for easy decorating.
-                </p>
-                <p> Cupcakes are known today as teeny, delectable desserts. But did you know that cupcakes have been around since the 19th century?
-                    Then, they were made with simple cake recipes, and they were far from the decadent desserts we can find today.
-                    Although classic vanilla with chocolate icing options are still popular and evoke a sense of nostalgia,
-                    upscale bakeries and even people who bake for a hobby have created elaborate flavors with even more elaborate options for design.
-                </p>
-            </div>
+        <div class="text-center">
+            <h3 class="text-primary">Cup Cake draft</h3>
+        </div>
+        <div class="text-justify">
+            <p>Carefully dip tops of cupcake into the frosting, give a slight twist and remove. Finish off with a swirl of a knife if needed.
+                Dip frosted cupcakes into bowls of nuts, colored sugar, sprinkles, or other decors for easy decorating.
+            </p>
+            <p> Cupcakes are known today as teeny, delectable desserts. But did you know that cupcakes have been around since the 19th century?
+                Then, they were made with simple cake recipes, and they were far from the decadent desserts we can find today.
+                Although classic vanilla with chocolate icing options are still popular and evoke a sense of nostalgia,
+                upscale bakeries and even people who bake for a hobby have created elaborate flavors with even more elaborate options for design.
+            </p>
         </div>
     </div>
 </div>
