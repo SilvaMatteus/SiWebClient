@@ -12,6 +12,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
         .state('app.login', {
+            controller:'loginController',
             url: '/login',
             templateUrl: '/views/login.html'
         })
@@ -24,6 +25,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: '/views/home.html'
         })
         .state('app.register', {
+            controller:'userController',
             url: '/register',
             templateUrl: '/views/register.html'
         });
