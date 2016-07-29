@@ -1,7 +1,8 @@
 var app = angular.module("readerApp", [
     'ui.router',
     'ngResource',
-    'notification.fx'
+    'notification.fx',
+    'hc.marked'
 ]);
 
 app.constant('context', "/");
