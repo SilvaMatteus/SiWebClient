@@ -3,7 +3,7 @@
 */
 app.controller('userController', userController);
 
-function userController($scope, $timeout) {
+function userController($scope, $timeout, User, notificationFactory) {
     $scope.count = 1024;
     $scope.perc = 25.5;
 
@@ -15,4 +15,18 @@ function userController($scope, $timeout) {
       }
     };
     $scope.increment();
+
+    $scope.login = function() {
+
+
+
+
+        // this.listOfUser = User.query();
+        // for (var i = 0; i < this.listOfUser.length; i++) {
+        //     if (this.listOfUser[i].email == 'email@email.com') {
+        //         $scope.userLoggedIn = this.listOfUser[i];
+        //     }
+        // }
+
+    }
 }
