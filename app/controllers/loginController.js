@@ -3,7 +3,9 @@
 */
 app.controller('userController', userController);
 
-function userController($scope, $timeout, User, notificationFactory) {
+function userController($scope, $timeout, User, notificationFactory, Auth) {
+
+    console.log(Auth.isAuthenticated())
     $scope.count = 1024;
     $scope.perc = 25.5;
 
@@ -19,7 +21,7 @@ function userController($scope, $timeout, User, notificationFactory) {
     // $scope.$watch("listOfUser", function(newValue, oldValue) {
     //     console.log(" mudou  " , newValue, oldValue);
     // });
-
+/*
     $scope.login = function() {
         $scope.listOfUser = User.query()
         console.log($scope.listOfUser.length);
@@ -35,4 +37,7 @@ function userController($scope, $timeout, User, notificationFactory) {
         //   }
         // });
     }
+   */
 }
+
+
