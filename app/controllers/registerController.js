@@ -1,16 +1,24 @@
 app.controller('registerController', registerController);
 
-function registerController($scope, User, notificationFactory) {
 
-    $scope.newUser = new User();
+
+function registerController($scope, notificationFactory, $http, $state) {
 
     $scope.save = function() {
-        $scope.newUser.$save(function() {
-            notificationFactory.showSuccess("New user sucessfully! Registed", function(){});
-        }).catch(function(user) {
-            notificationFactory.showError("Erro trying to Register new user!", function(){
-                console.log(user.data.error);
+
+        $scope.button_disabled = true;
+
+        res = $http.post('http://127.0.0.1:5000/users', $scope.newUser)
+
+            .success(function(data){
+                notificationFactory.showSuccess("New user sucessfully! Registed", function(){
+                    $state.transitionTo("app.login");
+                });
+            }).error(function(data){
+                notificationFactory.showError("Error trying to Register new user!", function(){
+                    $scope.button_disabled = false;
+                });
+
             });
-        });
     }
 }

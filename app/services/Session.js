@@ -1,11 +1,11 @@
 
 
-app.factory('Auth', function(){
+app.factory('Session', function(){
 
     return {
 
         setAuthentication: function (user) {
-            sessionStorage.user = user;
+            sessionStorage.user = JSON.stringify(user);
         },
 
         isAuthenticated: function () {
@@ -14,6 +14,10 @@ app.factory('Auth', function(){
 
         logout: function(){
             sessionStorage.clear();
+        },
+
+        getName: function(){
+            return sessionStorage.user.name = JSON.parse(sessionStorage.user).name;
         }
     };
 

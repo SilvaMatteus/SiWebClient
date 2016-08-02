@@ -14,20 +14,45 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('app.login', {
             url: '/login',
-            templateUrl: '/views/login.html'
+            templateUrl: '/views/login.html',
+            controller: 'loginController',
+            authenticate: false
         })
         .state('app', {
-            controller:'userController',
             url: '/app',
-            templateUrl: '/views/template.html'
+            templateUrl: '/views/template.html',
+            controller: 'loginController',
+            authenticate: false
         })
         .state('app.home', {
             url: '/home',
-            templateUrl: '/views/home.html'
+            templateUrl: '/views/home.html',
+            controller: 'homeController',
+            authenticate: true
         })
         .state('app.register', {
-            controller:'registerController',
             url: '/register',
-            templateUrl: '/views/register.html'
+            templateUrl: '/views/register.html',
+            controller:'registerController'
         });
+
 });
+
+app.run(function ($rootScope, $state, Session) {
+
+    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+
+        if (toState.authenticate && !Session.isAuthenticated()) {
+            $state.transitionTo("app.login");
+            event.preventDefault();
+        }
+
+        if (!toState.authenticate && Session.isAuthenticated()) {
+            $state.transitionTo("app.home");
+            event.preventDefault();
+        }
+
+    });
+});
+
+

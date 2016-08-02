@@ -23,7 +23,7 @@
     <div class="col-lg-4">
         <div class="ibox-content text-left">
             <h2>Create your account</h2>
-            <form class="m-t" role="form">
+            <form class="m-t" role="form" ng-submit="save()">
 
                 <div class="form-group">
                     <label for="input-name"> Username </label>
@@ -40,7 +40,7 @@
                     <input type="password" ng-model="newUser.password" class="form-control" placeholder="Password" id="input-pwd" required="">
                 </div>
 
-                <input type="submit" ng-click="save()" value="Save" class="btn btn-primary block full-width m-b">Create account</input>
+                <input type="submit"  value="Save" class="btn btn-primary block full-width m-b" ng-disabled="button_disabled">Create account</input>
             </form>
         </div>
     </div>
