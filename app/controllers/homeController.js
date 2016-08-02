@@ -10,5 +10,8 @@ function homeController($scope, $http, Session, $location, $state) {
         $state.transitionTo("app.login");
     }
 
-}
+    $scope.newModal = function() {
+       $('#newModal').modal('toggle');
+   }
 
+}

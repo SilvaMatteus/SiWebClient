@@ -35,7 +35,7 @@
 <section class="container">
     <div class="row">
         <div class="text-center">
-            <h1>{{name}}</h1>
+            <h1>{{ name }}</h1>
             <div class="alert alert-dismissible alert-success text-center">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Wow!</strong> Here will stay your announcements. <a href="#" class="alert-link">This important alert message</a>.
@@ -48,13 +48,22 @@
                     <h3 class="panel-title">Your Documents</h3>
                 </div>
                 <div class="panel-body">
-                    <p class="text-primary">document.txt</p> <br> curriculum.txt
+                    <p class="text-primary">document.txt</p>
+                     <br> curriculum.txt
                 </div>
                 <div class="panel-heading">
                     <h3 class="panel-title">Folders</h3>
                 </div>
                 <div class="panel-body">
                     OtherDocuments
+                </div>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Actions</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <button ng-click="newModal()" class="btn btn-primary block full-width m-b">New</button>
+                    <button ng-click="" class="btn btn-success block full-width m-b">Edit</button>
+                    <button ng-click="" class="btn btn-danger block full-width m-b">Delete</button>
                 </div>
             </div>
         </div>
@@ -74,3 +83,21 @@
         </div>
     </div>
 </section>
+
+<div class="modal" id="newModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">aqui fica um campo com o titulo de um documento</h4>
+      </div>
+      <div class="modal-body">
+        <p>aqui fica um campo com o conteudo de um documento</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save Document</button>
+      </div>
+    </div>
+  </div>
+</div>
