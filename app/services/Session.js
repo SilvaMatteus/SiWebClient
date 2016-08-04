@@ -18,6 +18,10 @@ app.factory('Session', function(){
 
         getName: function(){
             return sessionStorage.user.name = JSON.parse(sessionStorage.user).name;
+        },
+
+        getId: function() {
+            return sessionStorage.user.id = JSON.parse(sessionStorage.user).id;
         }
     };
 

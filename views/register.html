@@ -27,20 +27,20 @@
 
                 <div class="form-group">
                     <label for="input-name"> Username </label>
-                    <input type="text" ng-model="newUser.name" class="form-control" placeholder="Username" id="input-name" required="">
+                    <input type="text" ng-model="newUser.name" class="form-control" placeholder="Username" id="input-name" required="true">
                 </div>
 
                 <div class="form-group">
                     <label for="input-email"> E-mail address </label>
-                    <input type="email" ng-model="newUser.email" class="form-control" placeholder="your.email@example.com" id="input-email" required="">
+                    <input type="email" ng-model="newUser.email" class="form-control" placeholder="your.email@example.com" id="input-email" required="true">
                 </div>
 
                 <div class="form-group">
                     <label for="input-pwd"> Password </label>
-                    <input type="password" ng-model="newUser.password" class="form-control" placeholder="Password" id="input-pwd" required="">
+                    <input type="password" ng-model="newUser.password" class="form-control" placeholder="Password" id="input-pwd" required="true">
                 </div>
 
-                <input type="submit"  value="Save" class="btn btn-primary block full-width m-b" ng-disabled="button_disabled">Create account</input>
+                <input type="submit"  value="Create account" class="btn btn-primary block full-width m-b" ng-disabled="button_disabled"></input>
             </form>
         </div>
     </div>

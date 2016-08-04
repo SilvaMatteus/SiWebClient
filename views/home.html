@@ -35,10 +35,10 @@
 <section class="container">
     <div class="row">
         <div class="text-center">
-            <h1>{{ name }}</h1>
+            <h1>{{ username }}</h1>
             <div class="alert alert-dismissible alert-success text-center">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Wow!</strong> Here will stay your announcements. <a href="#" class="alert-link">This important alert message</a>.
+                Welcome {{ username }}
             </div>
             <hr>
         </div>
@@ -48,8 +48,9 @@
                     <h3 class="panel-title">Your Documents</h3>
                 </div>
                 <div class="panel-body">
-                    <p class="text-primary">document.txt</p>
-                     <br> curriculum.txt
+                    <div ng-repeat="d in documents">
+                        <a ng-click=""> d </a>
+                    </div>
                 </div>
                 <div class="panel-heading">
                     <h3 class="panel-title">Folders</h3>
@@ -61,43 +62,48 @@
                     <h3 class="panel-title">Actions</h3>
                 </div>
                 <div class="panel-body text-center">
-                    <button ng-click="newModal()" class="btn btn-primary block full-width m-b">New</button>
-                    <button ng-click="" class="btn btn-success block full-width m-b">Edit</button>
+                    <button ng-click="newCreateModal()" class="btn btn-primary block full-width m-b">New</button>
+                    <button ng-click="" class="btn btn-warning block full-width m-b">Edit</button>
                     <button ng-click="" class="btn btn-danger block full-width m-b">Delete</button>
                 </div>
             </div>
         </div>
         <div class="col-lg-8">
             <div class="text-justified">
-                <marked>
-                    ## Testing Markdown
-                    *It works!*
-                    > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-                    consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-                    Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-
-                    > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-                    id sem consectetuer libero luctus adipiscing.
-                </marked>
+                {{ currentDocument }}
             </div>
         </div>
     </div>
 </section>
 
-<div class="modal" id="newModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">aqui fica um campo com o titulo de um documento</h4>
-      </div>
-      <div class="modal-body">
-        <p>aqui fica um campo com o conteudo de um documento</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save Document</button>
-      </div>
+<!-- Edit Modal -->
+<div class="modal" id="newCreateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Write your new document =D</h4>
+            </div>
+            <div class="modal-body text-justify">
+                <form>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input ng-model="newDocument.document_title" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea ng-model="newDocument.document_content" class="form-control" rows="10" cols="20"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="createDocument()" type="button" class="btn btn-primary">Save Document</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
