@@ -1,6 +1,7 @@
 # SI Project
 
 About the project...
+Use http://bootswatch.com/readable/ to bootstrap reference.
 
 ## Our Team
 
