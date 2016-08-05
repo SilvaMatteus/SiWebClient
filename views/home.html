@@ -55,7 +55,7 @@
                 <div class="panel-body text-center">
                     <button ng-click="newCreateModal()" class="btn btn-primary block full-width m-b">New</button>
                     <button ng-click="newEditModal()" class="btn btn-warning block full-width m-b">Edit</button>
-                    <button ng-click="deleteDocument()" class="btn btn-danger block full-width m-b">Delete</button>
+                    <button ng-click="showWarningToDelete()" class="btn btn-danger block full-width m-b">Delete</button>
                 </div>
                 <div class="panel-heading">
                     <h3 class="panel-title">Folders</h3>
@@ -146,6 +146,22 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button ng-click="updateDocument()" type="button" class="btn btn-primary">Save Document</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Warning Modal -->
+<div class="modal" id="deleteWarningModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h2> Danger Zone </h2>
+                <p> No ctrl+z for this action! You sure you want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-privary" data-dismiss="modal">Cancel</button>
+                <button ng-click="deleteDocument()" type="button" class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>

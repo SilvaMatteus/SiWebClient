@@ -69,22 +69,27 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
+    $scope.showWarningToDelete = function() {
+        if ($scope.currentDocument === undefined) {
+            notificationFactory.showError("No document to be deleted", function(){});
+        } else {
+            $('#deleteWarningModal').modal('toggle');
+        }
+    }
+
     $scope.deleteDocument = function() {
+        $('#deleteWarningModal').modal('toggle');
         $http({
             method : "DELETE",
             url : "http://127.0.0.1:5000/documents/" + $scope.userId,
             data: $scope.currentDocument
         }).then(function mySucces(response) {
-            $state.reload();
             $scope.currentDocument = $scope.documents[0]
             notificationFactory.showSuccess("Document deleted!", function(){});
+            $state.reload();
 
         }, function myError(response) {
-            if ($scope.currentDocument === undefined){
-                notificationFactory.showError("No document to be deleted", function(){});
-            } else {
-                notificationFactory.showError("Document not deleted", function(){});
-            }
+            notificationFactory.showError("Document not deleted", function(){});
         });
     }
 }
