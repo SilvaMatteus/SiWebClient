@@ -62,7 +62,7 @@
                 </div>
                 <div class="panel-body text-center">
                     <div ng-repeat="folder in folders">
-                        <a ng-click="" class="btn btn-default btn-xs"> {{ folder.folder_name }} </a>
+                        <a ng-click="setCurrentFolder($index)" class="btn btn-default btn-xs"> {{ folder.folder_name }} </a>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
                     <h3 class="panel-title">Folder Actions</h3>
                 </div>
                 <div class="panel-body text-center">
-                    <button ng-click="" class="btn btn-primary block full-width m-b">New</button>
+                    <button ng-click="newFolderModal()" class="btn btn-primary block full-width m-b">New</button>
                     <button ng-click="" class="btn btn-warning block full-width m-b">Rename</button>
                     <button ng-click="" class="btn btn-danger block full-width m-b">Delete</button>
                 </div>
@@ -166,3 +166,27 @@
         </div>
     </div>
 </div>
+
+<!-- Create Folder Modal -->
+<div class="modal" id="newFolderModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-justify">
+                <form>
+                    <div class="row">
+                        <div class="form-group">
+                            <h1>Name to the new folder:</h1>
+                            <input ng-model="newFolder.folder_name" class="form-control" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-privary" data-dismiss="modal">Cancel</button>
+                <button ng-click="createFolder()" type="button" class="btn btn-danger">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Rename Folder Modal -->

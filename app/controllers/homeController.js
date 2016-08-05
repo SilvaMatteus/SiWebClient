@@ -16,6 +16,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         $scope.currentDocument = $scope.documents[index]
     }
 
+    $scope.setCurrentFolder = function(index) {
+        $scope.currentFolder = $scope.folders[index]
+        $scope.documents = $scope.folders[index].folder_documents;
+        $scope.currentDocument = $scope.documents[index];
+    }
+
     $scope.newCreateModal = function() {
         $('#newCreateModal').modal('toggle');
     }
@@ -90,6 +96,26 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
         }, function myError(response) {
             notificationFactory.showError("Document not deleted", function(){});
+        });
+    }
+
+    $scope.newFolderModal = function() {
+        $('#newFolderModal').modal('toggle');
+    }
+
+
+    $scope.createFolder = function() {
+        $http({
+           method : "POST",
+           url : "http://127.0.0.1:5000/folders/" + $scope.userId,
+           data: $scope.newFolder
+        }).then(function mySucces(response) {
+           $('#newFolderModal').modal('toggle');
+           $state.reload();
+           notificationFactory.showSuccess("Folder created!", function(){});
+
+        }, function myError(response) {
+           notificationFactory.showError("Folder not created", function(){});
         });
     }
 }
