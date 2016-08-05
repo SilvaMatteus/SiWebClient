@@ -68,4 +68,23 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showError("Document not edited", function(){});
         });
     }
+
+    $scope.deleteDocument = function() {
+        $http({
+            method : "DELETE",
+            url : "http://127.0.0.1:5000/documents/" + $scope.userId,
+            data: $scope.currentDocument
+        }).then(function mySucces(response) {
+            $state.reload();
+            $scope.currentDocument = $scope.documents[0]
+            notificationFactory.showSuccess("Document deleted!", function(){});
+
+        }, function myError(response) {
+            if ($scope.currentDocument === undefined){
+                notificationFactory.showError("No document to be deleted", function(){});
+            } else {
+                notificationFactory.showError("Document not deleted", function(){});
+            }
+        });
+    }
 }
