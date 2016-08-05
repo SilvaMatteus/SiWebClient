@@ -18,8 +18,10 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     $scope.setCurrentFolder = function(index) {
         $scope.currentFolder = $scope.folders[index]
-        $scope.documents = $scope.folders[index].folder_documents;
-        $scope.currentDocument = $scope.documents[index];
+        $scope.documents = $scope.currentFolder.folder_documents;
+        console.log($scope.currentFolder.folder_documents)
+        console.log($scope.currentFolder)
+        $scope.currentDocument = $scope.documents[0];
     }
 
     $scope.newCreateModal = function() {
@@ -37,8 +39,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
            url : "http://127.0.0.1:5000/folders/" + $scope.userId
         }).then(function mySucces(response) {
            $scope.folders = response.data;
-           $scope.documents = $scope.folders[0].folder_documents;
-           $scope.currentDocument = $scope.documents[0];
+           $scope.setCurrentFolder(0)
+        //    if ($scope.currentFolder === undefined) {
+        //        $scope.currentFolder = $scope.folders[0];
+        //    }
+        //    $scope.documents = $scope.currentFolder.folder_documents;
+        //    $scope.currentDocument = $scope.documents[0];
 
         }, function myError(response) {
            notificationFactory.showError("Unable to retrieve folders! Try logging again.", function(){});
@@ -48,7 +54,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.createDocument = function() {
         $http({
            method : "POST",
-           url : "http://127.0.0.1:5000/documents/" + $scope.userId,
+           url : "http://127.0.0.1:5000/documents/" + $scope.userId + "/" + $scope.currentFolder.folder_name,
            data: $scope.newDocument
         }).then(function mySucces(response) {
            $('#newCreateModal').modal('toggle');
