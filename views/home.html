@@ -72,7 +72,7 @@
                 <div class="panel-body text-center">
                     <button ng-click="newFolderModal()" class="btn btn-primary block full-width m-b">New</button>
                     <button ng-click="newRenameFolderModal()" class="btn btn-warning block full-width m-b">Rename</button>
-                    <button ng-click="" class="btn btn-danger block full-width m-b">Delete</button>
+                    <button ng-click="deleteFolderModal()" class="btn btn-danger block full-width m-b">Delete</button>
                 </div>
             </div>
         </div>
@@ -206,6 +206,22 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-privary" data-dismiss="modal">Cancel</button>
                 <button ng-click="renameFolder()" type="button" class="btn btn-danger">Rename</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Warning Folder Modal -->
+<div class="modal" id="deleteWarningFolderModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h2> Danger Zone </h2>
+                <p> No ctrl+z for this action! You sure you want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-privary" data-dismiss="modal">Cancel</button>
+                <button ng-click="deleteFolder()" type="button" class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>

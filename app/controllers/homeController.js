@@ -134,13 +134,32 @@ function homeController($scope, $http, Session, $location, $state, notificationF
            method : "PUT",
            url : "http://127.0.0.1:5000/folders/" + $scope.userId + "/" + $scope.currentFolder.folder_name,
            data: $scope.newNameFolder
-        }).then(function mySucces(response) {
+         }).then(function mySucces(response) {
            $('#renameFolderModal').modal('toggle');
            $state.reload();
            notificationFactory.showSuccess("Folder renamed!", function(){});
 
         }, function myError(response) {
            notificationFactory.showError("Folder not renamed", function(){});
+        });
+    }
+
+    $scope.deleteFolderModal = function(){
+        $('#deleteWarningFolderModal').modal('toggle');
+
+    }
+
+    $scope.deleteFolder = function() {
+        $http({
+          method : "DELETE",
+          url : "http://127.0.0.1:5000/folders/" + $scope.userId + "/" + $scope.currentFolder.folder_name
+        }).then(function mySucces(response) {
+          $('#deleteWarningFolderModal').modal('toggle');
+          $state.reload();
+          notificationFactory.showSuccess("Folder deleted!", function(){});
+
+        }, function myError(response) {
+          notificationFactory.showError("Folder not deleted", function(){});
         });
     }
 }
