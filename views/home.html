@@ -71,7 +71,7 @@
                 </div>
                 <div class="panel-body text-center">
                     <button ng-click="newFolderModal()" class="btn btn-primary block full-width m-b">New</button>
-                    <button ng-click="" class="btn btn-warning block full-width m-b">Rename</button>
+                    <button ng-click="newRenameFolderModal()" class="btn btn-warning block full-width m-b">Rename</button>
                     <button ng-click="" class="btn btn-danger block full-width m-b">Delete</button>
                 </div>
             </div>
@@ -190,3 +190,23 @@
 </div>
 
 <!-- Rename Folder Modal -->
+<div class="modal" id="renameFolderModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-justify">
+                <form>
+                    <div class="row">
+                        <div class="form-group">
+                            <h1>Rename the folder:</h1>
+                            <input ng-model="newNameFolder.folder_name" class="form-control" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-privary" data-dismiss="modal">Cancel</button>
+                <button ng-click="renameFolder()" type="button" class="btn btn-danger">Rename</button>
+            </div>
+        </div>
+    </div>
+</div>
