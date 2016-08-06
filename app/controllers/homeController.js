@@ -69,7 +69,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.updateDocument = function() {
         $http({
             method : "PUT",
-            url : "http://127.0.0.1:5000/documents/" + $scope.userId,
+            url : "http://127.0.0.1:5000/documents/" + $scope.userId + "/" + $scope.currentFolder.folder_name,
             data: $scope.documentToEdit
         }).then(function mySucces(response) {
             $('#newEditModal').modal('toggle');
@@ -93,7 +93,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         $('#deleteWarningModal').modal('toggle');
         $http({
             method : "DELETE",
-            url : "http://127.0.0.1:5000/documents/" + $scope.userId,
+            url : "http://127.0.0.1:5000/documents/" + $scope.userId + "/" + $scope.currentFolder.folder_name,
             data: $scope.currentDocument
         }).then(function mySucces(response) {
             $scope.currentDocument = $scope.documents[0]
