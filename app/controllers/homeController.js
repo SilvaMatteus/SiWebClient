@@ -103,6 +103,11 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         $('#newFolderModal').modal('toggle');
     }
 
+    $scope.renameFolderModal = function() {
+        $scope.folderToRename = $scope.currentFolder;
+        $('#renameFolderModal').modal('toggle');
+    }
+
 
     $scope.createFolder = function() {
         $http({
@@ -116,6 +121,20 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
         }, function myError(response) {
            notificationFactory.showError("Folder not created", function(){});
+        });
+    }
+
+    $scope.renameFolder = function() {
+        $http({
+            method : "PUT",
+            url : "http://127.0.0.1:5000/folders/" + $scope.userId,
+            data : $scope.folderToRename
+        }).then(function mySucces(response) {
+           $('#renameFolderModal').modal('toggle');
+           $state.reload();
+           notificationFactory.showSuccess("Folder renamed", function(){});
+        }, function myError(response) {
+          notificationFactory.showError("Folder not renamed", function(){});
         });
     }
 }
