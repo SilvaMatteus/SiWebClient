@@ -32,7 +32,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     $scope.getFolders = function() {
-        console.log($scope.userId)
+      
         $http({
            method : "GET",
            url : "http://127.0.0.1:5000/folders_tree/" + $scope.userId
@@ -55,7 +55,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
            data: $scope.newDocument
         }).then(function mySucces(response) {
            $('#newCreateModal').modal('toggle');
-           $state.reload();
+           $scope.getFolders()
            notificationFactory.showSuccess("Document saved!", function(){});
 
         }, function myError(response) {
