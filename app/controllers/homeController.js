@@ -32,6 +32,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     $scope.getFolders = function() {
+        console.log($scope.userId)
         $http({
            method : "GET",
            url : "http://127.0.0.1:5000/folders_tree/" + $scope.userId
@@ -97,10 +98,10 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         $('#deleteWarningModal').modal('toggle');
         $http({
             method : "DELETE",
-            url : "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.currentDocumentId,
+            url : "http://127.0.0.1:5000/document/" + $scope.userId,
             data: {document_id: $scope.currentDocumentId}
         }).then(function mySucces(response) {
-            $scope.currentDocument = $scope.documents[0]
+            $scope.currentDocument = -1
             notificationFactory.showSuccess("Document deleted!", function(){});
             $scope.getFolders()
 
