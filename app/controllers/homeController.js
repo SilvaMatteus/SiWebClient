@@ -21,7 +21,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.newEditModal = function() {
 
         if ($scope.currentDocument === undefined) {
-            notificationFactory.showError("No document to be deleted", function(){});
+            notificationFactory.showError("No document to be edited", function(){});
         } else {
             $scope.documentToEdit = {}
             $scope.documentToEdit.document_name = $scope.currentDocument.title
@@ -32,7 +32,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     $scope.getFolders = function() {
-      
+
         $http({
            method : "GET",
            url : "http://127.0.0.1:5000/folders_tree/" + $scope.userId
