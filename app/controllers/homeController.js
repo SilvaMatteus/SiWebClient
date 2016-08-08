@@ -76,6 +76,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
             $scope.currentDocument.title = $scope.documentToEdit.document_name
             $scope.currentDocument.content = $scope.documentToEdit.document_content
+			$scope.getFolders()
 
             notificationFactory.showSuccess("Document edited!", function(){});
 
