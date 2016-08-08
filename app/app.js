@@ -2,7 +2,8 @@ var app = angular.module("readerApp", [
     'ui.router',
     'ngResource',
     'notification.fx',
-    'hc.marked'
+    'hc.marked',
+    'TreeWidget'
 ]);
 
 app.constant('context', "/");

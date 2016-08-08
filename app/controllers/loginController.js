@@ -24,7 +24,7 @@ function loginController($scope, $timeout, notificationFactory, Session, $http, 
 
         $http({
             method : "GET",
-            url : "http://127.0.0.1:5000/users/" + email + '/' + password
+            url : "http://127.0.0.1:5000/user/" + email + '/' + password
         }).then(function mySucces(response) {
             Session.setAuthentication(response.data);
             $state.transitionTo("app.home");
