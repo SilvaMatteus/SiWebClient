@@ -56,6 +56,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         }).then(function mySucces(response) {
            $('#newCreateModal').modal('toggle');
            $scope.getFolders()
+           $scope.newDocument = undefined;
            notificationFactory.showSuccess("Document saved!", function(){});
 
         }, function myError(response) {
@@ -126,6 +127,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         }).then(function mySucces(response) {
            $('#newFolderModal').modal('toggle');
            $scope.getFolders()
+           $scope.newFolder = undefined;
            notificationFactory.showSuccess("Folder created!", function(){});
         }, function myError(response) {
            notificationFactory.showError("Folder not created", function(){});
