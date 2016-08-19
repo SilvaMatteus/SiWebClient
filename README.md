@@ -1,39 +1,60 @@
 # SI Project
 
-About the project...
-Use http://bootswatch.com/readable/ to bootstrap reference.
+Link to site:
+    http://web.cloud.lsd.ufcg.edu.br:43180/
 
-Server Repository:
+## How to run locally?
 
-    https://github.com/SilvaMatteus/SiWebServer
+There is two components: web and api.
 
-## Our Team
+#### To run web component:
 
-About our team...
+If you have not nodeJS installed, you can follow this steps:
 
-## Usage
-
-Install nvm:
+install Node Version Manager:
 
     http://www.liquidweb.com/kb/how-to-install-nvm-node-version-manager-for-node-js-on-ubuntu-12-04-lts/
+
+To follow good practices of web programming, we are using bower
+to manage dependencies. You can see more about at https://bower.io/.
 
 Install nodeJS and bower using the following commands:
 
     nvm install stable  # It will install the stable version of nodeJS
     npm install -g bower # It will install bower
 
-In repository folder - the same folder than the bower.json file:
+Go to web directory and run the following command to get dependencies needed:
 
     bower install
 
-To have a local web service:
+To run our application a web-server is needed. We recommend ws (local-web-server):
 
     npm install local-web-server
 
-To start your local web service use:
+To start your local web service (If you are using the recommended local-web-server)
+run the following command into .../web/ directory:
 
     ws
 
-Probably the web page will be available at
+It will probably make the application available at
 
     localhost:8000
+
+### To run the api command:
+
+We are using a micro-framework called Flask.
+To run .../api/api.py some libraries are required. To install it need to have
+PyPi (Python Package Index) installed. Read more at https://pypi.python.org/pypi/pip.
+
+If you are using Linux, PyPi can be installed easily doing:
+
+    sudo apt-get install python-pip
+
+After install PyPi, run the following command to install all of the requirements\*:
+\* Run this command in the same directory where is requirements.txt file.
+
+    sudo pip install -r requirements.txt
+
+Now, with the requirements installed, just run the api.py like any other python file.
+
+    python api.py
