@@ -12,22 +12,26 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown<span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Document<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a>To do</a></li>
-                        <li><a>To do</a></li>
-                        <li><a>To do</a></li>
+                        <li ng-click="newCreateModal()"><a href="#">New</a></li>
+                        <li ng-click="newEditModal()"><a href="#">Edit</a></li>
+                        <li ng-click="showWarningToDelete()"><a href="#">Delete</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Folder<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-click="newFolderModal()"><a href="#">New</a></li>
+                        <li ng-click="newRenameFolderModal()"><a href="#">Rename</a></li>
+                        <li ng-click="deleteFolderModal()"><a href="#">Delete</a></li>
                     </ul>
                 </li>
             </ul>
-
-            <form class="navbar-form navbar-right" method="GET" action="http://www.google.com/search">
-                <div class="form-group">
-                    <input type="text" name="q" class="form-control" placeholder="Find a Document">
-                </div>
-                <button type="submit" class="btn btn-default">Search</button>
-                 <button ng-click="logout()" type="button" class="btn btn-default">Logout</button>
-            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-click="whatIsNewModal()"><a href="#">What is new?</a></li>
+                <li ng-click="logout()"><a href="#">Logout</a></li>
+            </ul>
         </div>
     </div>
 </nav>
@@ -38,43 +42,32 @@
             <h1>{{ username }}</h1>
             <hr>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-9 panel panel-default">
+            <div class="panel-body">
+                <div class="text-center">
+                    <h3>{{ currentDocument.title }}</h3>
+                </div>
+                <div class="text-justified">
+                    {{ currentDocument.content }}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
             <div class="panel panel-primary">
-
-
-
                 <div class="panel-heading">
-                    <h3 class="panel-title">Your Documents</h3>
+                    <h3 class="panel-title">My Documents</h3>
                 </div>
                 <div class="panel-body text-left">
                     <tree ng-click="teste" nodes='treeNodes'></tree>
                 </div>
-
-                <div class="panel-heading">
-                    <h3 class="panel-title">Document Actions</h3>
-                </div>
-                <div class="panel-body text-center">
-                    <button ng-click="newCreateModal()" class="btn btn-primary block full-width m-b">New</button>
-                    <button ng-click="newEditModal()" class="btn btn-warning block full-width m-b">Edit</button>
-                    <button ng-click="showWarningToDelete()" class="btn btn-danger block full-width m-b">Delete</button>
-                </div>
-
-                <div class="panel-heading">
-                    <h3 class="panel-title">Folder Actions</h3>
-                </div>
-                <div class="panel-body text-center">
-                    <button ng-click="newFolderModal()" class="btn btn-primary block full-width m-b">New</button>
-                    <button ng-click="newRenameFolderModal()" class="btn btn-warning block full-width m-b">Rename</button>
-                    <button ng-click="deleteFolderModal()" class="btn btn-danger block full-width m-b">Delete</button>
-                </div>
             </div>
-        </div>
-        <div class="col-lg-8">
-            <div class="text-center">
-                <h3>{{ currentDocument.title }}</h3>
-            </div>
-            <div class="text-justified">
-                {{ currentDocument.content }}
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Shared With Me <span class="badge">2</span></h3>
+                </div>
+                <div class="panel-body text-left">
+                    Shared Documents!
+                </div>
             </div>
         </div>
     </div>
@@ -215,6 +208,23 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-privary" data-dismiss="modal">Cancel</button>
                 <button ng-click="deleteFolder()" type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- What is new modal Modal -->
+<div class="modal" id="whatIsNewModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="jumbotron">
+                  <h1>What's new?</h1>
+                  <p>We hear you! After heard you, the Reader has changed a litle bit.</p>
+                  <p>A new layout to home view. Simple, modern and useful.</p>
+                  <p class="text-muted">The changes were made based on the evaluation of UFCG students</p>
+                  <p><a class="btn btn-primary btn-lg" data-dismiss="modal">I got it!</a></p>
+                </div>
             </div>
         </div>
     </div>

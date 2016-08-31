@@ -18,6 +18,10 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         $('#newCreateModal').modal('toggle');
     }
 
+    $scope.whatIsNewModal = function() {
+        $('#whatIsNewModal').modal('toggle');
+    }
+
     $scope.newEditModal = function() {
 
         if ($scope.currentDocument === undefined) {
