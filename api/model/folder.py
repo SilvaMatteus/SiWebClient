@@ -67,9 +67,7 @@ class Folder(object):
     def delete_document(self, document_id):
         document = self.find_document(document_id)
         if document != None:
-            print document
             self.documents.remove(document)
-            print documents
             return True
         for folder in self.folders:
             if folder.delete_document(document_id):
