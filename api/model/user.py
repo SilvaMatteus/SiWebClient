@@ -45,10 +45,11 @@ class User(object):
         folder = self.search_folder(folder_id)
         folder.add_document(document)
 
-    def edit_document(self, document_id, new_name, new_content):
+    def edit_document(self, document_id, new_name, new_ext, new_content):
         document = self.search_document(document_id)
         document.name = new_name
         document.content = new_content
+        document.extension = new_ext
 
     def user_add_folder(self, parent_folder_id, folder_name):
         parent_folder = self.search_folder(parent_folder_id)

@@ -15,7 +15,7 @@ class UserRepository(object):
 
         # Creating a user default to make easy the development
         user = User('Fulano', 'email@email.com', 'pwd', "uid")
-        document = Document("My document", "I think to myself... what a wonderful world!")
+        document = Document("My document", ".txt", "I think to myself... what a wonderful world!")
         document.id = "did"
         user.folder.id = "fid"
         user.add_document(user.folder.id, document)
@@ -63,14 +63,14 @@ class UserRepository(object):
         user_to_delete = self.get(id)
         self.list_of_users.remove(user_to_delete)
 
-    def new_document(self, user_id, folder_id, document_name, document_content = ""):
+    def new_document(self, user_id, folder_id, document_name, document_ext, document_content = ""):
         user = self.get(user_id)
-        documment = Document(document_name, document_content)
+        documment = Document(document_name, document_ext, document_content)
         user.add_document(folder_id, documment)
 
-    def edit_document(self, user_id, document_name, document_content, document_id):
+    def edit_document(self, user_id, document_name, document_ext, document_content, document_id):
         user = self.get(user_id)
-        user.edit_document(document_id, document_name, document_content)
+        user.edit_document(document_id, document_name, document_ext, document_content)
 
     def delete_document(self, user_id, document_id):
         user = self.get(user_id)

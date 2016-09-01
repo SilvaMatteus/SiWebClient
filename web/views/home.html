@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                </button>
+            </button>
             <a class="navbar-brand" href="#">Reader</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -45,7 +45,8 @@
         <div class="col-lg-9 panel panel-default">
             <div class="panel-body">
                 <div class="text-center">
-                    <h3>{{ currentDocument.title }}</h3>
+                    <h3>{{ currentDocument.title }}{{ currentDocument.extension }}</h3>
+                    {{currentDocumentId}}
                 </div>
                 <div class="text-justified">
                     {{ currentDocument.content }}
@@ -87,6 +88,18 @@
                         <div class="form-group">
                             <label>Title</label>
                             <input ng-model="newDocument.document_name" class="form-control" />
+                            <div class="radio">
+                                <label>
+                                    <input ng-model="newDocument.document_ext" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt" checked="">
+                                    .txt
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input ng-model="newDocument.document_ext" type="radio" name="optionsRadios" id="optionsRadios2" value=".md">
+                                    .md
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -119,6 +132,18 @@
                         <div class="form-group">
                             <label>Title</label>
                             <input ng-model="documentToEdit.document_name" class="form-control" />
+                            <div class="radio">
+                                <label>
+                                    <input ng-model="documentToEdit.document_ext" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt" checked="">
+                                    .txt
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input ng-model="documentToEdit.document_ext" type="radio" name="optionsRadios" id="optionsRadios2" value=".md">
+                                    .md
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -219,11 +244,11 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="jumbotron">
-                  <h1>What's new?</h1>
-                  <p>We hear you! After heard you, the Reader has changed a litle bit.</p>
-                  <p>A new layout to home view. Simple, modern and useful.</p>
-                  <p class="text-muted">The changes were made based on the evaluation of UFCG students</p>
-                  <p><a class="btn btn-primary btn-lg" data-dismiss="modal">I got it!</a></p>
+                    <h1>What's new?</h1>
+                    <p>We hear you! After heard you, the Reader has changed a litle bit.</p>
+                    <p>A new layout to home view. Simple, modern and useful.</p>
+                    <p class="text-muted">The changes were made based on the evaluation of UFCG students</p>
+                    <p><a class="btn btn-primary btn-lg" data-dismiss="modal">I got it!</a></p>
                 </div>
             </div>
         </div>

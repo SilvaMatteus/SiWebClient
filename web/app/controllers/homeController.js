@@ -75,6 +75,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             data: {
                 document_name: $scope.documentToEdit.document_name,
                 document_content: $scope.documentToEdit.document_content,
+                document_ext: $scope.documentToEdit.document_ext,
                 document_id: $scope.currentDocumentId
             }
         }).then(function mySucces(response) {
@@ -82,6 +83,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
             $scope.currentDocument.title = $scope.documentToEdit.document_name
             $scope.currentDocument.content = $scope.documentToEdit.document_content
+            $scope.currentDocument.extension = $scope.documentToEdit.document_ext
 			$scope.getFolders()
 
             notificationFactory.showSuccess("Document edited!", function(){});
@@ -106,7 +108,9 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             url : "http://127.0.0.1:5000/document/" + $scope.userId,
             data: {document_id: $scope.currentDocumentId}
         }).then(function mySucces(response) {
-            $scope.currentDocument = -1
+            $scope.currentDocument.title = undefined
+            $scope.currentDocument.content = undefined
+            $scope.currentDocument.extension = undefined
             notificationFactory.showSuccess("Document deleted!", function(){});
             $scope.getFolders()
 
@@ -196,6 +200,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.currentDocumentId = node.id
             $scope.currentDocument.content = node.content
             $scope.currentDocument.title = node.name
+            $scope.currentDocument.extension = node.extension
         }
     });
 

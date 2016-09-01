@@ -5,9 +5,10 @@ import uuid
 class Document(object):
     """ Object that represents a document of Reader """
 
-    def __init__(self, name, content):
+    def __init__(self, name, extension, content):
         super(Document, self).__init__()
         self.name = name
+        self.extension = extension
         self.content = content
         self.id = str(uuid.uuid4()).replace('-', '')
 
