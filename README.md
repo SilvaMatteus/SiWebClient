@@ -13,7 +13,9 @@ If you have not nodeJS installed, you can follow this steps:
 
 install Node Version Manager:
 
-    http://www.liquidweb.com/kb/how-to-install-nvm-node-version-manager-for-node-js-on-ubuntu-12-04-lts/
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.7/install.sh | bash
+    
+More information about how to install nvm [here](#https://github.com/creationix/nvm).
 
 To follow good practices of web programming, we are using bower
 to manage dependencies. You can see more about at https://bower.io/.
