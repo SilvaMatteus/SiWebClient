@@ -18,10 +18,10 @@ class Share_utilities(object):
         # e no usuário coloca o documento no shared_with_me'''
         document_from_user = user.search_document(document_id)
         if(permission == "write"):
-            document_from_user.shareViewAndEditAdd(other_user.__hash__)
+            document_from_user.shareViewAndEditAdd(other_user.id)
         elif(permission == "read"):
-            document_from_user.shareViewAdd(other_user.__hash__)
-        other_user.receiveShare(user.__hash__, document_id)
+            document_from_user.shareViewAdd(other_user.id)
+        other_user.receiveShare(user.id, document_id)
 
     def get_shared_documents(self, user):
         return user.shared_with_me

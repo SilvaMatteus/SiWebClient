@@ -66,10 +66,10 @@ class User(object):
         self.folder.delete_folder(folder_id)
 
     def receiveShare(self, user_id, document_id):
-        if(shared_with_me.has_key(user_id)):
-            shared_with_me[user_id].append(document_id)
+        if(self.shared_with_me.has_key(user_id)):
+            self.shared_with_me[user_id].append(document_id)
         else:
-            shared_with_me[user_id] = [document_id]
+            self.shared_with_me[user_id] = [document_id]
 
     def __eq__(self, other_user):
         if isinstance(other_user, User):

@@ -262,4 +262,10 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
         }
     });
 
+    $scope.setCurrentDocumentShared = function(index){
+        $scope.currentDocument.content = $scope.documents_shared_with_me[index].content
+        $scope.currentDocument.title = $scope.documents_shared_with_me[index].name
+        $scope.currentDocument.extension = $scope.documents_shared_with_me[index].extension
+    }
+
 }

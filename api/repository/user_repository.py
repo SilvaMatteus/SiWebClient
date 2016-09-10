@@ -127,14 +127,17 @@ class UserRepository(object):
         share_utilities.share(user, other_user, document_id, permission)
 
 
-    def get_shared_documents(self, user_id):
+    def get_shared_with_me_documents(self, user_id):
         '''pega os documentos compartilhados com o usuário
         '''
         documents = []
         user = self.get(user_id)
-        mapadeUsuariosEDocumentos = share_utilities.get_shared_documents(user)
+        print "passou aqui"
+        mapadeUsuariosEDocumentos = user.shared_with_me
+        print "mapa de usuarios"
         for userId in mapadeUsuariosEDocumentos.keys():
-            user = get(userId)
+            user = self.get(userId)
+            print user
             for docId in mapadeUsuariosEDocumentos[userId]:
                 documents.append(user.search_document(docId))
         return documents
