@@ -106,13 +106,16 @@ class UserRepository(object):
         user = self.get(user_id)
         user.delete_folder(folder_id)
 
-    def share_document(self, user_id, other_user_email, document_id):
+    def share_document(self, user_id, other_user_email, document_id, typeOfShare):
         print user_id
         user = self.get(user_id)
         print "eee"
         other_user = self.get_by_email(other_user_email)
         print "eee2"
-        share_utilities.share(user, other_user, document_id, False)
+        if typeOfShare == "editAndView":
+            share_utilities.share(user, other_user, document_id, True)
+        else:
+            share_utilities.share(user, other_user, document_id, False)
 
     def get_shared_documents(self, user_id):
         user = self.get(user_id)
