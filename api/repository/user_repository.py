@@ -106,17 +106,19 @@ class UserRepository(object):
         user = self.get(user_id)
         user.delete_folder(folder_id)
 
+'''Encontra os usuários e compartilha os documentos usando uma classe epecialista nisso,
+ tem que receber a opção de compartilhamento eo passar no método
+'''
     def share_document(self, user_id, other_user_email, document_id, typeOfShare):
-        print user_id
-        user = self.get(user_id)
-        print "eee"
-        other_user = self.get_by_email(other_user_email)
-        print "eee2"
+        user = self.get(user_id
+        other_user = self.get_by_email(other_user_email
         if typeOfShare == "editAndView":
             share_utilities.share(user, other_user, document_id, True)
         else:
             share_utilities.share(user, other_user, document_id, False)
 
+'''pega os documentos compartilhados com o usuário
+'''
     def get_shared_documents(self, user_id):
         user = self.get(user_id)
         return share_utilities.get_shared_documents

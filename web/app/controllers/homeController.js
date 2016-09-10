@@ -167,7 +167,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
            notificationFactory.showError("Folder not renamed", function(){});
         });
     }
-
+/*Abre o modal de compartilhar o documento
+*/
     $scope.newShareModal = function() {
         if ($scope.currentDocument === undefined) {
             notificationFactory.showError("No document to be shared", function(){});
@@ -176,7 +177,9 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         }
     }
 
-
+/*Quando aperta share no modal, ele manda pra api o user id logado, o email do outro user e o documento atual
+tem que mandar ainda o lance de apenas visualizar ou editar também!
+*/
     $scope.shareDocument = function() {
         $http({
             method : "PUT",
@@ -189,7 +192,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showError("Document not shared", function(){});
         });
     }
-
+/* Tem que fazer um método para pegar os documentos compartilhados com o usuário logao e comolocar naquela view verdinha
+*/
     $scope.deleteFolderModal = function(){
         if ($scope.currentFolderId == $scope.rootFolderId)
             notificationFactory.showError("Select a folder!", function(){});

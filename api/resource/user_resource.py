@@ -143,7 +143,8 @@ def delete_folder(user_id, folder_id):
     except Exception as e:
         return '%s' % (e), 404
 
-'''Eu n consigo passar o id do documento como data :/'''
+'''Tem que receber a opção de compartilhamento ainda
+'''
 
 @user_blueprint.route("/share/<string:user_id>/<string:other_user_email>", methods=['PUT'])
 def share_document(user_id, other_user_email):
@@ -155,11 +156,12 @@ def share_document(user_id, other_user_email):
         return 'Document successfully shared', 200
     except Exception as e:
         return '%s' % (e), 404
-
-@user_blueprint.route("/document/shared/<string:user_id>", methods=['GET'])
+'''aqui seria para pegar os documentos compartilhados com o usuário para por na lista
+'''
+@user_blueprint.route("/share/<string:user_id>", methods=['GET'])
 def get_shared_documents(user_id):
     try:
-        shared_documents = user_repository.get_shared_documents(user_id)
+        shared_documents = user_repository.get_shared_with_me_documents(user_id)
         return json.dumps(shared_documents, default=default_parser), 200
     except Exception as e:
         return '%s' % (e), 404
