@@ -13,6 +13,7 @@ class User(object):
         self.email = email
         self.password = password
         self.folder = Folder("root")
+        # self.shared_with_me = ["a","b","c"]
         self.shared_with_me_folder = Folder("shared_with_me_folder")
 
         if id != "0":

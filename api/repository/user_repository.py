@@ -28,6 +28,12 @@ class UserRepository(object):
     def list(self):
         return self.list_of_users
 
+    def get_all_emails(self):
+        emails = []
+        for user in self.list_of_users:
+            emails.append(user.email)
+        return emails
+
     def get(self, id):
         for user in self.list_of_users:
             if user.id == id:

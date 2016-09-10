@@ -20,6 +20,10 @@ def get(id):
     user = user_repository.get(id)
     return json.dumps(user, default=default_parser), 200
 
+@user_blueprint.route("/list-emails", methods=['GET'])
+def get_registered_emails():
+    list_of_emails = user_repository.get_all_emails()
+    return json.dumps(list_of_emails, default=default_parser), 200
 
 @user_blueprint.route("/user/<string:email>/<string:password>", methods=['GET'])
 def autenticate(email, password):
@@ -146,14 +150,16 @@ def delete_folder(user_id, folder_id):
 '''Tem que receber a opção de compartilhamento ainda
 '''
 
-@user_blueprint.route("/share/<string:user_id>/<string:other_user_email>", methods=['PUT'])
-def share_document(user_id, other_user_email):
+#Mudar para suportar document id
+@user_blueprint.route("/share/<string:user_id>/<string:document_id>", methods=['POST'])
+def share_document(user_id, document_id):
     try:
-        kwargs = json.loads(request.data.decode('utf-8'))
-        kwargs['user_id'] = user_id
-        kwargs['other_user_email'] = other_user_email
-        user_repository.share_document(**kwargs)
-        return 'Document successfully shared', 200
+        # kwargs = json.loads(request.data.decode('utf-8'))
+        # kwargs['user_id'] = user_id
+        # kwargs['other_user_email'] = other_user_email
+        # user_repository.share_document(**kwargs)
+        # return 'Document successfully shared', 200
+        return "OK", 200
     except Exception as e:
         return '%s' % (e), 404
 '''aqui seria para pegar os documentos compartilhados com o usuário para por na lista

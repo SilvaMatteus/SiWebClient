@@ -262,24 +262,29 @@
 
 <!-- Share Modal -->
 
-<div class="modal" id="shareModal">
+<div class="modal" id="shareModal" ng-init="getListOfEmails()">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body text-justify">
-			  <h1>'Placeholder' Share with whom? </h1>
-              <input ng-model="toShareUserEmail" class="form-control" />
-              <div class="radio">
-                <label>
-                    <input ng-model="document.canEditAndView" type="radio" name="editAndViewRadio" id="editAndViewRadio" value="editAndView" checked="">
-                    Edit and View
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                    <input ng-model="document.canOnlyEdit" type="radio" name="editRadio" id="editRadio" value="OnlyEdit" checked="">
-                    Only Edit
-                </label>
-              </div>
+                <h1>Share this document</h1>
+                {{ listOfEmails }}
+                <div>
+                    <select id="sel" ng-repeat="email in listOfEmails">
+                        <option ng-model="sharing.email_to_share" value="{{ email }}">{{ email }}</option>
+                    </select>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input ng-model="sharing.permission" type="radio" name="permission" id="editAndViewRadio" value="read" checked="">
+                        Just can read.
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input ng-model="sharing.permission" type="radio" name="permission" id="editRadio" value="write" checked="">
+                        Can read and edit.
+                    </label>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-privary" data-dismiss="modal">Cancel</button>

@@ -52,6 +52,19 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
+    $scope.getListOfEmails = function() {
+        $http({
+           method : "GET",
+           url : "http://127.0.0.1:5000/list-emails"
+        }).then(function mySucces(response) {
+
+            $scope.listOfEmails = response.data
+
+        }, function myError(response) {
+           notificationFactory.showError("Unable to retrieve emails of other users!", function(){});
+        });
+    }
+
     $scope.createDocument = function() {
         $http({
            method : "POST",
@@ -182,9 +195,9 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
 */
     $scope.shareDocument = function() {
         $http({
-            method : "PUT",
-            url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.toShareUserEmail,
-            data: {document_id: $scope.currentDocumentId}
+            method : "POST",
+            url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
+            data: $scope.sharing
         }).then(function mySucces(response) {
             $('#shareModal').modal('toggle');
             notificationFactory.showSuccess("Document shared!", function(){});
