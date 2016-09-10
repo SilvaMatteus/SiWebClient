@@ -3,6 +3,9 @@ from model.user import User
 from model.document import Document
 from model.folder import Folder
 from shared.utils import SingletonType
+from repository.share_utilities import Share_utilities
+
+share_utilities = Share_utilities()
 
 class UserRepository(object):
     """ Repository of users.
@@ -31,6 +34,13 @@ class UserRepository(object):
                 return user
 
         raise ValueError('User ID not found')
+
+    def get_by_email(self, email):
+        for user in self.list_of_users:
+            if user.email == email:
+                return user
+
+        raise ValueError('User Email not found')
 
     def autenticate(self, email, password):
         for user in self.list_of_users:
@@ -95,3 +105,15 @@ class UserRepository(object):
     def delete_folder(self, user_id, folder_id):
         user = self.get(user_id)
         user.delete_folder(folder_id)
+
+    def share_document(self, user_id, other_user_email, document_id):
+        print user_id
+        user = self.get(user_id)
+        print "eee"
+        other_user = self.get_by_email(other_user_email)
+        print "eee2"
+        share_utilities.share(user, other_user, document_id, False)
+
+    def get_shared_documents(self, user_id):
+        user = self.get(user_id)
+        return share_utilities.get_shared_documents

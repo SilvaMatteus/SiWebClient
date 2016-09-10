@@ -101,6 +101,8 @@ def get_folders(user_id):
     except Exception as e:
         return '%s' % (e), 404
 
+
+
 @user_blueprint.route("/folders_tree/<string:user_id>", methods=['GET'])
 def get_folders_tree(user_id):
     try:
@@ -138,5 +140,26 @@ def delete_folder(user_id, folder_id):
         kwargs['folder_id'] = folder_id
         user_repository.delete_folder(**kwargs)
         return 'Folder successfully deleted', 200
+    except Exception as e:
+        return '%s' % (e), 404
+
+'''Eu n consigo passar o id do documento como data :/'''
+
+@user_blueprint.route("/share/<string:user_id>/<string:other_user_email>", methods=['PUT'])
+def share_document(user_id, other_user_email):
+    try:
+        kwargs = json.loads(request.data.decode('utf-8'))
+        kwargs['user_id'] = user_id
+        kwargs['other_user_email'] = other_user_email
+        user_repository.share_document(**kwargs)
+        return 'Document successfully shared', 200
+    except Exception as e:
+        return '%s' % (e), 404
+
+@user_blueprint.route("/document/shared/<string:user_id>", methods=['GET'])
+def get_shared_documents(user_id):
+    try:
+        shared_documents = user_repository.get_shared_documents(user_id)
+        return json.dumps(shared_documents, default=default_parser), 200
     except Exception as e:
         return '%s' % (e), 404

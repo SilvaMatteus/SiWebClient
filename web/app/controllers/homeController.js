@@ -151,6 +151,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     }
 
+
+
     $scope.renameFolder = function() {
         $http({
            method : "PUT",
@@ -163,6 +165,28 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
         }, function myError(response) {
            notificationFactory.showError("Folder not renamed", function(){});
+        });
+    }
+
+    $scope.newShareModal = function() {
+        if ($scope.currentDocument === undefined) {
+            notificationFactory.showError("No document to be shared", function(){});
+        } else {
+            $('#shareModal').modal('toggle');
+        }
+    }
+
+
+    $scope.shareDocument = function() {
+        $http({
+            method : "PUT",
+            url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.toShareUserEmail,
+            data: {document_id: $scope.currentDocumentId}
+        }).then(function mySucces(response) {
+            $('#shareModal').modal('toggle');
+            notificationFactory.showSuccess("Document shared!", function(){});
+        }, function myError(response) {
+            notificationFactory.showError("Document not shared", function(){});
         });
     }
 
