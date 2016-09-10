@@ -13,8 +13,8 @@ class User(object):
         self.email = email
         self.password = password
         self.folder = Folder("root")
-        # self.shared_with_me = ["a","b","c"]
-        self.shared_with_me_folder = Folder("shared_with_me_folder")
+        self.shared_with_me = []
+        #self.shared_with_me_folder = Folder("shared_with_me_folder")
 
         if id != "0":
             self.id = id
@@ -37,7 +37,7 @@ class User(object):
     def search_document(self, document_id):
         document = self.folder.find_document(document_id)
         if (document == None):
-            raise Exception("Document not founded")
+            raise Exception("Document not found")
         return document
 
     def delete_document(self, document_id):
@@ -65,8 +65,8 @@ class User(object):
     def delete_folder(self, folder_id):
         self.folder.delete_folder(folder_id)
 
-    def reciveShare(self, document_id):
-        self.shared_with_me_folder.append(documment_id)
+    def receiveShare(self, document_id):
+        self.shared_with_me.append(document_id)
 
     def __eq__(self, other_user):
         if isinstance(other_user, User):

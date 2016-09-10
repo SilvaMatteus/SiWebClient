@@ -35,6 +35,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     }
 
+    $scope.getFoldersAndShared = function() {
+        getFolders()
+        getSharedWithMe()
+    }
+
+
     $scope.getFolders = function() {
 
         $http({
@@ -42,7 +48,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
            url : "http://127.0.0.1:5000/folders_tree/" + $scope.userId
         }).then(function mySucces(response) {
 
-            $scope.treeNodes = response.data[0].children;
+            $scope.treeNodes = response.data[0].children
             $scope.rootFolderId = response.data[0].id
             $scope.currentFolderId = $scope.rootFolderId
             $scope.currentDocumentId = undefined
@@ -157,7 +163,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     $scope.newRenameFolderModal = function(){
 
-        if ($scope.currentFolderId == $scope.rootFolderId)
+        if ($scope.currentFolderId === $scope.rootFolderId)
             notificationFactory.showError("Select a folder!", function(){});
         else
             $('#renameFolderModal').modal('toggle');
@@ -195,7 +201,7 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
 */
     $scope.shareDocument = function() {
         $http({
-            method : "POST",
+            method : "PUT",
             url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
             data: $scope.sharing
         }).then(function mySucces(response) {
@@ -203,6 +209,17 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
             notificationFactory.showSuccess("Document shared!", function(){});
         }, function myError(response) {
             notificationFactory.showError("Document not shared", function(){});
+        });
+    }
+
+    $scope.getSharedWithMe = function() {
+        $http({
+            method : "GET",
+            url : "http://127.0.0.1:5000/share/" + $scope.userId,
+        }).then(function mySucces(response) {
+            $scope.documents_shared_with_me = response.data
+        }, function myError(response) {
+           notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function(){});
         });
     }
 /* Tem que fazer um método para pegar os documentos compartilhados com o usuário logao e comolocar naquela view verdinha

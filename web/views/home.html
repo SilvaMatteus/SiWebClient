@@ -37,7 +37,7 @@
     </div>
 </nav>
 
-<section class="container" ng-init="getFolders()">
+<section class="container" ng-init="getFoldersAndShared()">
     <div class="row">
         <div class="text-center">
             <h1>{{ username }}</h1>
@@ -65,10 +65,17 @@
             </div>
             <div class="panel panel-info">
                 <div class="panel-heading">
+                    {{documents_shared_with_me}}
+                    oi
                     <h3 class="panel-title">Shared With Me <span class="badge">2</span></h3>
                 </div>
                 <div class="panel-body text-left">
-                    Shared Documents!
+                    <div ng-repeat="document in documents_shared_with_me">
+                        <a ng-click="setCurrentDocumentShared($index)" class="btn btn-default btn-xs"> {{ document.name }} </a>
+                    </div>
+                </div>
+                <div class="panel-body text-left">
+                    Shared Documents :(
                 </div>
             </div>
         </div>
@@ -267,12 +274,16 @@
         <div class="modal-content">
             <div class="modal-body text-justify">
                 <h1>Share this document</h1>
+
                 {{ listOfEmails }}
+                <!--
                 <div>
                     <select id="sel" ng-repeat="email in listOfEmails">
                         <option ng-model="sharing.email_to_share" value="{{ email }}">{{ email }}</option>
                     </select>
-                </div>
+                </div>-->
+
+                <input ng-model="sharing.other_user_email" class="form-control" />
                 <div class="radio">
                     <label>
                         <input ng-model="sharing.permission" type="radio" name="permission" id="editAndViewRadio" value="read" checked="">

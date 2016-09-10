@@ -11,14 +11,17 @@ class Share_utilities(object):
     def __init__(self):
         super(Share_utilities, self).__init__()
 
-    def share(self, user, other_user, document_id, canEdit):
+    def share(self, user, other_user, document_id, permission):
         """
         """
         # '''Adiciona na lista do documento o id do usuário que pode ver ou ver/editar o documento
         # e no usuário coloca o documento no shared_with_me'''
-        document_from_user = user.find_document(document_id)
-        if(canEdit):
+        document_from_user = user.search_document(document_id)
+        if(permission == "write"):
             document_from_user.shareViewAndEditAdd(other_user.__hash__)
-        else:
+        elif(permission == "read"):
             document_from_user.shareViewAdd(other_user.__hash__)
-        other_user.reciveShare(document_id)
+        other_user.receiveShare(document_id)
+
+    def get_shared_documents(self, user):
+        return user.shared_with_me

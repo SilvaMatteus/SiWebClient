@@ -151,16 +151,18 @@ def delete_folder(user_id, folder_id):
 '''
 
 #Mudar para suportar document id
-@user_blueprint.route("/share/<string:user_id>/<string:document_id>", methods=['POST'])
+@user_blueprint.route("/share/<string:user_id>/<string:document_id>", methods=['PUT'])
+#ERRO 405 COM POST
 def share_document(user_id, document_id):
     try:
-        # kwargs = json.loads(request.data.decode('utf-8'))
-        # kwargs['user_id'] = user_id
-        # kwargs['other_user_email'] = other_user_email
-        # user_repository.share_document(**kwargs)
+        kwargs = json.loads(request.data.decode('utf-8'))
+        kwargs['user_id'] = user_id
+        kwargs['document_id'] = document_id
+        user_repository.share_document(**kwargs)
         # return 'Document successfully shared', 200
         return "OK", 200
     except Exception as e:
+        print e
         return '%s' % (e), 404
 '''aqui seria para pegar os documentos compartilhados com o usuário para por na lista
 '''
