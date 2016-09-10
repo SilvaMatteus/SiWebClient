@@ -35,10 +35,10 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     }
 
-    $scope.getFoldersAndShared = function() {
+    /*$scope.getFoldersAndShared = function() {
         getFolders()
         getSharedWithMe()
-    }
+    }*/
 
 
     $scope.getFolders = function() {
