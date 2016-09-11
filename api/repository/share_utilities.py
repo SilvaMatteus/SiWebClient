@@ -21,7 +21,7 @@ class Share_utilities(object):
             document_from_user.shareViewAndEditAdd(other_user.id)
         elif(permission == "read"):
             document_from_user.shareViewAdd(other_user.id)
-        other_user.receiveShare(user.id, document_id)
+        other_user.receiveShare(user.id, document_id, permission)
 
     def get_shared_documents(self, user):
         return user.shared_with_me

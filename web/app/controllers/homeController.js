@@ -217,7 +217,8 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
             method : "GET",
             url : "http://127.0.0.1:5000/share/" + $scope.userId,
         }).then(function mySucces(response) {
-            $scope.documents_shared_with_me = response.data
+            $scope.documents_shared_with_me = response.data[0]
+            $scope.documents_shared_with_me_permissions = response.data[1]
         }, function myError(response) {
            notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function(){});
         });
@@ -266,6 +267,7 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
         $scope.currentDocument.content = $scope.documents_shared_with_me[index].content
         $scope.currentDocument.title = $scope.documents_shared_with_me[index].name
         $scope.currentDocument.extension = $scope.documents_shared_with_me[index].extension
+        $scope.currentDocument.permission = $scope.documents_shared_with_me_permissions[index]
     }
 
 }

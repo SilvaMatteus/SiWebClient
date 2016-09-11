@@ -131,13 +131,13 @@ class UserRepository(object):
         '''pega os documentos compartilhados com o usuário
         '''
         documents = []
+        permissions = []
         user = self.get(user_id)
-        print "passou aqui"
         mapadeUsuariosEDocumentos = user.shared_with_me
-        print "mapa de usuarios"
         for userId in mapadeUsuariosEDocumentos.keys():
             user = self.get(userId)
-            print user
             for docId in mapadeUsuariosEDocumentos[userId]:
-                documents.append(user.search_document(docId))
-        return documents
+                documents.append(user.search_document(docId[0]))
+                permissions.append(docId[1])
+        result = [documents, permissions]
+        return result
