@@ -29,7 +29,6 @@ class UserRepository(object):
         usera.folder.id = "fida"
         usera.add_document(usera.folder.id, documenta)
 
-        print documenta.ownerId
         self.list_of_users = [user, usera]
         self.share_document("uid","did","a@a.com","read")
 
@@ -146,7 +145,7 @@ class UserRepository(object):
         documents = []
         permissions = []
         user = self.get(user_id)
-        
+
         new_shares = 0
         new_shares = user.new_shares
         user.new_shares = 0
