@@ -27,6 +27,24 @@ class Document(object):
     def shareViewAndEditAdd(self, user_id):
         self.shareViewAndEdit.append(user_id)
 
+    def change_share(self, user_id_to_change):
+        for user_id in self.shareViewAndEdit:
+            if(user_id == user_id_to_change):
+                self.shareViewAndEdit.remove(user_id_to_change)
+                self.shareView.append(user_id_to_change)
+        for user_id in self.shareView:
+            if(user_id == user_id_to_change):
+                self.shareView.remove(user_id_to_change)
+                self.shareViewAndEdit.append(user_id_to_change)
+
+    def removeShare(self, user_id_to_remove):
+        for user_id in self.shareViewAndEdit:
+            if(user_id == user_id_to_remove):
+                self.shareViewAndEdit.remove(user_id_to_remove)
+        for user_id in self.shareView:
+            if(user_id == user_id_to_remove):
+                self.shareView.remove(user_id_to_remove)
+
     def __eq__(self, other):
         """ Equals method of a Document.
         """

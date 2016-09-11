@@ -178,6 +178,7 @@ def share_document(user_id, document_id):
         # return 'Document successfully shared', 200
         return "OK", 200
     except Exception as e:
+        print e
         return '%s' % (e), 404
 '''aqui seria para pegar os documentos compartilhados com o usuário para por na lista
 '''

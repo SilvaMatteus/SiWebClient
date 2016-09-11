@@ -77,6 +77,12 @@ class User(object):
         else:
             self.shared_with_me[user_id] = ([[document_id, permission]])
 
+    def change_share(self, user_id, document_id, change_permission, permission):
+        '''Change document permission, have to delete and add
+        '''
+        self.shared_with_me[user_id].remove([document_id, permission])
+        self.shared_with_me[user_id].append([document_id, change_permission])
+
     def __eq__(self, other_user):
         if isinstance(other_user, User):
             return (
