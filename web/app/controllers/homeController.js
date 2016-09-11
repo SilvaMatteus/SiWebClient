@@ -260,6 +260,9 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         }).then(function mySucces(response) {
             $scope.documents_shared_with_me = response.data[0]
             $scope.documents_shared_with_me_permissions = response.data[1]
+            if(response.data[2] != 0){
+                notificationFactory.showSuccess("You have "+ response.data[2] +" new documents shared you!", function(){});
+            }
         }, function myError(response) {
            notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function(){});
         });

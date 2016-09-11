@@ -14,6 +14,7 @@ class User(object):
         self.password = password
         self.folder = Folder("root")
         self.shared_with_me = {}
+        self.new_shares = 0
         #self.shared_with_me_folder = Folder("shared_with_me_folder")
 
         if id != "0":
@@ -70,6 +71,7 @@ class User(object):
         self.folder.delete_folder(folder_id)
 
     def receiveShare(self, user_id, document_id, permission):
+        self.new_shares = self.new_shares + 1
         if(self.shared_with_me.has_key(user_id)):
             self.shared_with_me[user_id].append([document_id, permission])
         else:
