@@ -24,8 +24,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     $scope.newEditModal = function() {
 
-        if ($scope.currentDocument === undefined) {
-            notificationFactory.showError("No document to be edited", function(){});
+        if ($scope.currentDocumentId == undefined) {
+            notificationFactory.showError("Select a document to be edited", function(){});
         } else {
             $scope.documentToEdit = {}
             $scope.documentToEdit.document_name = $scope.currentDocument.title
@@ -113,8 +113,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     $scope.showWarningToDelete = function() {
-        if ($scope.currentDocument === undefined) {
-            notificationFactory.showError("No document to be deleted", function(){});
+        if ($scope.currentDocumentId == undefined) {
+            notificationFactory.showError("Select a document to be deleted", function(){});
         } else {
             $('#deleteWarningModal').modal('toggle');
         }
@@ -163,7 +163,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     $scope.newRenameFolderModal = function(){
 
-        if ($scope.currentFolderId === $scope.rootFolderId)
+        if ($scope.currentFolderId == $scope.rootFolderId)
             notificationFactory.showError("Select a folder!", function(){});
         else
             $('#renameFolderModal').modal('toggle');
@@ -189,8 +189,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 /*Abre o modal de compartilhar o documento
 */
     $scope.newShareModal = function() {
-        if ($scope.currentDocument === undefined) {
-            notificationFactory.showError("No document to be shared", function(){});
+        if ($scope.currentDocumentId == undefined) {
+            notificationFactory.showError("Select a document to be shared", function(){});
         } else {
             $('#shareModal').modal('toggle');
         }
