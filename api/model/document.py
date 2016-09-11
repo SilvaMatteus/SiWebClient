@@ -20,7 +20,6 @@ class Document(object):
         self.id = str(uuid.uuid4()).replace('-', '')
         self.shareViewAndEdit = []
         self.shareView = []
-        self.deleted = False
 
     def shareViewAdd(self, user_id):
         self.shareView.append(user_id)

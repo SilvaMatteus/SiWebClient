@@ -16,6 +16,7 @@ class Share_utilities(object):
         """
         # '''Adiciona na lista do documento o id do usuário que pode ver ou ver/editar o documento
         # e no usuário coloca o documento no shared_with_me'''
+
         document_from_user = user.search_document(document_id)
         if(permission == "write"):
             document_from_user.shareViewAndEditAdd(other_user.id)

@@ -148,9 +148,13 @@ class UserRepository(object):
         user = self.get(user_id)
         mapadeUsuariosEDocumentos = user.shared_with_me
         for userId in mapadeUsuariosEDocumentos.keys():
-            user = self.get(userId)
-            for docId in mapadeUsuariosEDocumentos[userId]:
-                documents.append(user.search_document(docId[0]))
-                permissions.append(docId[1])
+            userOwner = self.get(userId)
+            for docIdAndPermission in mapadeUsuariosEDocumentos[userId]:
+                try:
+                    docAtual = userOwner.search_document(docIdAndPermission[0])
+                    documents.append(docAtual)
+                    permissions.append(docIdAndPermission[1])
+                except:
+                    mapadeUsuariosEDocumentos[userId].remove(docIdAndPermission)
         result = [documents, permissions]
         return result
