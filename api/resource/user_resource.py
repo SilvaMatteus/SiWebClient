@@ -170,8 +170,6 @@ def share_document(user_id, document_id):
 def get_shared_documents(user_id):
     try:
         shared_documents = user_repository.get_shared_with_me_documents(user_id)
-        print "documentos"
-        print shared_documents
         return json.dumps(shared_documents, default=default_parser), 200
     except Exception as e:
         return '%s' % (e), 404
