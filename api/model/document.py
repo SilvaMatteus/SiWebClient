@@ -9,13 +9,14 @@ class Document(object):
     """ Object that represents a document of Reader
     """
 
-    def __init__(self, name, extension, content):
+    def __init__(self, name, extension, content, ownerId):
         """ Constructor of Document.
         """
         super(Document, self).__init__()
         self.name = name
         self.extension = extension
         self.content = content
+        self.ownerId = ownerId
         self.id = str(uuid.uuid4()).replace('-', '')
         self.shareViewAndEdit = []
         self.shareView = []

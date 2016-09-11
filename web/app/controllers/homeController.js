@@ -88,6 +88,41 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     $scope.updateDocument = function() {
+        console.log("entra aqui")
+        if ($scope.currentDocument.permission == undefined){
+            console.log("entra owner")
+            $scope.updateDocumentOwner();
+        }else{
+            console.log("entra shared")
+            $scope.updateDocumentShared();
+        }
+    }
+
+
+    $scope.updateDocumentShared = function() {
+        $http({
+            method : "PUT",
+            url : "http://127.0.0.1:5000/share/edit" ,
+            data: {
+                ownerId: $scope.currentDocument.ownerId,
+                document_content: $scope.documentToEdit.document_content,
+                document_id: $scope.currentDocumentId
+            }
+        }).then(function mySucces(response) {
+            $('#newEditModal').modal('toggle');
+
+            $scope.currentDocument.content = $scope.documentToEdit.document_content
+            $scope.getSharedWithMe()
+
+
+            notificationFactory.showSuccess("Document edited!", function(){});
+
+        }, function myError(response) {
+            notificationFactory.showError("Document not edited", function(){});
+        });
+    }
+
+    $scope.updateDocumentOwner = function() {
         $http({
             method : "PUT",
             url : "http://127.0.0.1:5000/document/" + $scope.userId,
@@ -103,7 +138,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.currentDocument.title = $scope.documentToEdit.document_name
             $scope.currentDocument.content = $scope.documentToEdit.document_content
             $scope.currentDocument.extension = $scope.documentToEdit.document_ext
-			$scope.getFolders()
+            $scope.getFolders()
 
             notificationFactory.showSuccess("Document edited!", function(){});
 
@@ -255,6 +290,7 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
             $scope.currentFolderId = node.id
             $scope.currentDocumentId = undefined
         } else {
+            $scope.currentDocument.permission = undefined
             $scope.currentFolderId = $scope.rootFolderId
             $scope.currentDocumentId = node.id
             $scope.currentDocument.content = node.content
@@ -264,6 +300,8 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
     });
 
     $scope.setCurrentDocumentShared = function(index){
+        $scope.currentDocument.ownerId = $scope.documents_shared_with_me[index].ownerId
+        $scope.currentDocumentId = $scope.documents_shared_with_me[index].id
         $scope.currentDocument.content = $scope.documents_shared_with_me[index].content
         $scope.currentDocument.title = $scope.documents_shared_with_me[index].name
         $scope.currentDocument.extension = $scope.documents_shared_with_me[index].extension

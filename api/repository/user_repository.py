@@ -18,18 +18,20 @@ class UserRepository(object):
 
         # Creating a user default to make easy the development
         user = User('Fulano', 'email@email.com', 'pwd', "uid")
-        document = Document("My document", ".txt", "I think to myself... what a wonderful world!")
+        document = Document("My document", ".txt", "I think to myself... what a wonderful world!", "uid")
         document.id = "did"
         user.folder.id = "fid"
         user.add_document(user.folder.id, document)
 
         usera = User('Godofredo', 'a@a.com', 'a', "uida")
-        documenta = Document("My document", ".txt", "I think to myself... what a bugged world!")
+        documenta = Document("My document", ".txt", "I think to myself... what a bugged world!", "uida")
         documenta.id = "dida"
         usera.folder.id = "fida"
         usera.add_document(usera.folder.id, documenta)
 
+        print documenta.ownerId
         self.list_of_users = [user, usera]
+        self.share_document("uid","did","a@a.com","read")
 
     def list(self):
         return self.list_of_users
@@ -87,12 +89,16 @@ class UserRepository(object):
 
     def new_document(self, user_id, folder_id, document_name, document_ext, document_content = ""):
         user = self.get(user_id)
-        documment = Document(document_name, document_ext, document_content)
+        documment = Document(document_name, document_ext, document_content, user_id)
         user.add_document(folder_id, documment)
 
     def edit_document(self, user_id, document_name, document_ext, document_content, document_id):
         user = self.get(user_id)
         user.edit_document(document_id, document_name, document_ext, document_content)
+
+    def edit_document_shared(self, ownerId, document_content, document_id):
+        user = self.get(ownerId)
+        user.update_content(document_content,document_id)
 
     def delete_document(self, user_id, document_id):
         user = self.get(user_id)

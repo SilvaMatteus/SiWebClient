@@ -97,6 +97,18 @@ def edit_document(user_id):
     except Exception as e:
         return '%s' % (e), 404
 
+@user_blueprint.route("/share/edit", methods=['PUT'])
+def edit_document_shared():
+    try:
+        kwargs = json.loads(request.data.decode('utf-8'))
+        print kwargs
+        user_repository.edit_document_shared(**kwargs)
+
+        return 'Document successfully edited', 202
+    except Exception as e:
+        print e
+        return '%s' % (e), 404
+
 @user_blueprint.route("/folders/<string:user_id>", methods=['GET'])
 def get_folders(user_id):
     try:

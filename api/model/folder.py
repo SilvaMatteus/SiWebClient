@@ -59,6 +59,7 @@ class Folder(object):
             d['is_folder'] = False
             d['content'] = document.content
             d['extension'] = document.extension
+            d['ownerId'] = document.ownerId
 
             object['children'].append(d)
 

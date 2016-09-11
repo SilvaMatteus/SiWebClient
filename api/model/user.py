@@ -53,6 +53,10 @@ class User(object):
         document.content = new_content
         document.extension = new_ext
 
+    def update_content(self, content, document_id):
+        document = self.search_document(document_id)
+        document.content = content
+
     def user_add_folder(self, parent_folder_id, folder_name):
         parent_folder = self.search_folder(parent_folder_id)
         folder = Folder(folder_name)
