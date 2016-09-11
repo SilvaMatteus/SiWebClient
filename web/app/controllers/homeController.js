@@ -70,6 +70,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 */
     $scope.newCreateModal = function() {
         $('#newCreateModal').modal('toggle');
+        $scope.newDocument = {}
+        $scope.newDocument.document_ext = ".txt"
     }
 
     $scope.createDocument = function() {
@@ -239,7 +241,9 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         if ($scope.currentDocumentId == undefined) {
             notificationFactory.showError("Select a document to be shared", function(){});
         } else {
+            $scope.sharing = {}
             $('#shareModal').modal('toggle');
+            $scope.sharing.permission = "read"
         }
     }
 
@@ -264,8 +268,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         /*}*/
     }
 
-/* Share a document
-*/
+    /* Open a shared document
+    */
     $scope.newSharedDocumentModal = function(){
         if($scope.currentSharedDocument.permission == "read"){
             $('#viewSharedDocumentModal').modal('toggle');
