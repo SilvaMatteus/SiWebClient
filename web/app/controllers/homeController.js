@@ -8,6 +8,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.userId = Session.getId();
     $scope.currentDocument = {}
     $scope.currentDocumentId = undefined
+    $scope.currentSharedDocument = {}
+    $scope.currentSharedDocumentId = undefined
 
     $scope.logout = function () {
         Session.logout();
@@ -21,25 +23,6 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.whatIsNewModal = function() {
         $('#whatIsNewModal').modal('toggle');
     }
-
-    $scope.newEditModal = function() {
-
-        if ($scope.currentDocumentId == undefined) {
-            notificationFactory.showError("Select a document to be edited", function(){});
-        } else {
-            $scope.documentToEdit = {}
-            $scope.documentToEdit.document_name = $scope.currentDocument.title
-            $scope.documentToEdit.document_content = $scope.currentDocument.content
-            $('#newEditModal').modal('toggle');
-        }
-
-    }
-
-    /*$scope.getFoldersAndShared = function() {
-        getFolders()
-        getSharedWithMe()
-    }*/
-
 
     $scope.getFolders = function() {
 
@@ -87,17 +70,15 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
-    $scope.updateDocument = function() {
-        console.log("entra aqui")
-        if ($scope.currentDocument.permission == undefined){
-            console.log("entra owner")
-            $scope.updateDocumentOwner();
-        }else{
-            console.log("entra shared")
-            $scope.updateDocumentShared();
+    $scope.newSharedDocumentModal = function(){
+        if($scope.currentSharedDocument.permission == "read"){
+            $('#viewSharedDocumentModal').modal('toggle');
+        }else if ($scope.currentSharedDocument.permission == "write") {
+            $scope.documentSharedToEdit = {}
+            $scope.documentSharedToEdit.document_content = $scope.currentSharedDocument.content
+            $('#editSharedDocumentModal').modal('toggle');
         }
     }
-
 
     $scope.updateDocumentShared = function() {
         $http({
@@ -105,21 +86,30 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             url : "http://127.0.0.1:5000/share/edit" ,
             data: {
                 ownerId: $scope.currentDocument.ownerId,
-                document_content: $scope.documentToEdit.document_content,
+                document_content: $scope.documentSharedToEdit.document_content,
                 document_id: $scope.currentDocumentId
             }
         }).then(function mySucces(response) {
-            $('#newEditModal').modal('toggle');
-
-            $scope.currentDocument.content = $scope.documentToEdit.document_content
+            $('#editSharedDocumentModal').modal('toggle');
             $scope.getSharedWithMe()
-
-
-            notificationFactory.showSuccess("Document edited!", function(){});
+            notificationFactory.showSuccess("Document shared edited!", function(){});
 
         }, function myError(response) {
-            notificationFactory.showError("Document not edited", function(){});
+            notificationFactory.showError("Document shared not edited", function(){});
         });
+    }
+
+    $scope.newEditModal = function() {
+
+        if ($scope.currentDocumentId == undefined) {
+            notificationFactory.showError("Select a document to be edited", function(){});
+        } else {
+            $scope.documentToEdit = {}
+            $scope.documentToEdit.document_name = $scope.currentDocument.title
+            $scope.documentToEdit.document_content = $scope.currentDocument.content
+            $('#newEditModal').modal('toggle');
+        }
+
     }
 
     $scope.updateDocumentOwner = function() {
@@ -205,8 +195,6 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     }
 
-
-
     $scope.renameFolder = function() {
         $http({
            method : "PUT",
@@ -231,20 +219,25 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         }
     }
 
-/*Quando aperta share no modal, ele manda pra api o user id logado, o email do outro user e o documento atual
-tem que mandar ainda o lance de apenas visualizar ou editar também!
-*/
     $scope.shareDocument = function() {
-        $http({
-            method : "PUT",
-            url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
-            data: $scope.sharing
-        }).then(function mySucces(response) {
+        console.log($scope.userId)
+        console.log($scope.currentDocument.ownerId)
+        if($scope.userId == $scope.currentDocument.ownerId){
+            notificationFactory.showError("Can't share your own document with you", function(){});
             $('#shareModal').modal('toggle');
-            notificationFactory.showSuccess("Document shared!", function(){});
-        }, function myError(response) {
-            notificationFactory.showError("Document not shared", function(){});
-        });
+        }
+        else{
+            $http({
+                method : "PUT",
+                url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
+                data: $scope.sharing
+            }).then(function mySucces(response) {
+                $('#shareModal').modal('toggle');
+                notificationFactory.showSuccess("Document shared!", function(){});
+            }, function myError(response) {
+                notificationFactory.showError("Document not shared", function(){});
+            });
+        }
     }
 
     $scope.getSharedWithMe = function() {
@@ -258,8 +251,7 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
            notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function(){});
         });
     }
-/* Tem que fazer um método para pegar os documentos compartilhados com o usuário logao e comolocar naquela view verdinha
-*/
+
     $scope.deleteFolderModal = function(){
         if ($scope.currentFolderId == $scope.rootFolderId)
             notificationFactory.showError("Select a folder!", function(){});
@@ -296,16 +288,20 @@ tem que mandar ainda o lance de apenas visualizar ou editar também!
             $scope.currentDocument.content = node.content
             $scope.currentDocument.title = node.name
             $scope.currentDocument.extension = node.extension
+            $scope.currentDocument.ownerId = node.ownerId
         }
     });
 
     $scope.setCurrentDocumentShared = function(index){
-        $scope.currentDocument.ownerId = $scope.documents_shared_with_me[index].ownerId
-        $scope.currentDocumentId = $scope.documents_shared_with_me[index].id
-        $scope.currentDocument.content = $scope.documents_shared_with_me[index].content
-        $scope.currentDocument.title = $scope.documents_shared_with_me[index].name
-        $scope.currentDocument.extension = $scope.documents_shared_with_me[index].extension
-        $scope.currentDocument.permission = $scope.documents_shared_with_me_permissions[index]
+        $scope.currentSharedDocument.ownerId = $scope.documents_shared_with_me[index].ownerId
+        $scope.currentSharedDocumentId = $scope.documents_shared_with_me[index].id
+        $scope.currentSharedDocument.content = $scope.documents_shared_with_me[index].content
+        $scope.currentSharedDocument.title = $scope.documents_shared_with_me[index].name
+        $scope.currentSharedDocument.extension = $scope.documents_shared_with_me[index].extension
+        $scope.currentSharedDocument.permission = $scope.documents_shared_with_me_permissions[index]
+        $scope.newSharedDocumentModal()
     }
+
+
 
 }
