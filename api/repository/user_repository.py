@@ -29,7 +29,6 @@ class UserRepository(object):
         usera.folder.id = "fida"
         usera.add_document(usera.folder.id, documenta)
 
-        print documenta.ownerId
         self.list_of_users = [user, usera]
         self.share_document("uid","did","a@a.com","read")
 

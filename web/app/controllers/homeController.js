@@ -60,7 +60,6 @@ function homeController($scope, $http, Session, $location, $state, notificationF
            method : "GET",
            url : "http://127.0.0.1:5000/email/" + $scope.userId
         }).then(function mySucces(response) {
-            console.log(response.data)
             $scope.emailOfUser = response.data
         }, function myError(response) {
            notificationFactory.showError("Unable to retrieve emails from current user", function(){});
@@ -120,12 +119,13 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.documentToEdit = {}
             $scope.documentToEdit.document_name = $scope.currentDocument.title
             $scope.documentToEdit.document_content = $scope.currentDocument.content
+            $scope.documentToEdit.document_ext = $scope.currentDocument.extension
             $('#newEditModal').modal('toggle');
         }
 
     }
 
-    $scope.updateDocumentOwner = function() {
+    $scope.updateDocumentOwned = function() {
         $http({
             method : "PUT",
             url : "http://127.0.0.1:5000/document/" + $scope.userId,

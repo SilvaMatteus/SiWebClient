@@ -92,7 +92,7 @@
                             <input ng-model="newDocument.document_name" class="form-control" />
                             <div class="radio">
                                 <label>
-                                    <input ng-model="newDocument.document_ext" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt" checked="">
+                                    <input ng-model="newDocument.document_ext" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt" ng-checked = "true">
                                     .txt
                                 </label>
                             </div>
@@ -136,7 +136,7 @@
                             <input ng-model="documentToEdit.document_name" class="form-control" />
                             <div class="radio">
                                 <label>
-                                    <input ng-model="documentToEdit.document_ext" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt" checked="">
+                                    <input ng-model="documentToEdit.document_ext" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt">
                                     .txt
                                 </label>
                             </div>
@@ -158,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button ng-click="updateDocumentOwner()" type="button" class="btn btn-primary">Save Document</button>
+                <button ng-click="updateDocumentOwned()" type="button" class="btn btn-primary">Save Document</button>
             </div>
         </div>
     </div>
@@ -280,13 +280,13 @@
                 <input ng-model="sharing.other_user_email" class="form-control" />
                 <div class="radio">
                     <label>
-                        <input ng-model="sharing.permission" type="radio" name="permission" id="editAndViewRadio" value="read" checked="">
+                        <input ng-model="sharing.permission" type="radio" name="permission" id="editAndViewRadio" value="read" ng-checked = "true">
                         Just can read.
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input ng-model="sharing.permission" type="radio" name="permission" id="editRadio" value="write" checked="">
+                        <input ng-model="sharing.permission" type="radio" name="permission" id="editRadio" value="write">
                         Can read and edit.
                     </label>
                 </div>

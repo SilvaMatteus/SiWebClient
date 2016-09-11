@@ -111,7 +111,6 @@ def edit_document_shared():
 
         return 'Document successfully edited', 202
     except Exception as e:
-        print e
         return '%s' % (e), 404
 
 @user_blueprint.route("/folders/<string:user_id>", methods=['GET'])
@@ -188,5 +187,4 @@ def get_shared_documents(user_id):
         shared_documents = user_repository.get_shared_with_me_documents(user_id)
         return json.dumps(shared_documents, default=default_parser), 200
     except Exception as e:
-        print e
         return '%s' % (e), 404
