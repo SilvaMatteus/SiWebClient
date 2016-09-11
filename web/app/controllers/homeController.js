@@ -17,14 +17,14 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         $state.transitionTo("app.login");
     }
 
-    $scope.newCreateModal = function() {
-        $('#newCreateModal').modal('toggle');
-    }
-
+/* What is new!
+*/
     $scope.whatIsNewModal = function() {
         $('#whatIsNewModal').modal('toggle');
     }
 
+/* Update user documents
+*/
     $scope.getFolders = function() {
 
         $http({
@@ -66,6 +66,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
+/* New Document
+*/
+    $scope.newCreateModal = function() {
+        $('#newCreateModal').modal('toggle');
+    }
+
     $scope.createDocument = function() {
         $http({
            method : "POST",
@@ -82,35 +88,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
-    $scope.newSharedDocumentModal = function(){
-        if($scope.currentSharedDocument.permission == "read"){
-            $('#viewSharedDocumentModal').modal('toggle');
-        }else if ($scope.currentSharedDocument.permission == "write") {
-            $scope.documentSharedToEdit = {}
-            $scope.documentSharedToEdit.document_content = $scope.currentSharedDocument.content
-            $('#editSharedDocumentModal').modal('toggle');
-        }
-    }
-
-    $scope.updateDocumentShared = function() {
-        $http({
-            method : "PUT",
-            url : "http://127.0.0.1:5000/share/edit" ,
-            data: {
-                ownerId: $scope.currentDocument.ownerId,
-                document_content: $scope.documentSharedToEdit.document_content,
-                document_id: $scope.currentDocumentId
-            }
-        }).then(function mySucces(response) {
-            $('#editSharedDocumentModal').modal('toggle');
-            $scope.getSharedWithMe()
-            notificationFactory.showSuccess("Document shared edited!", function(){});
-
-        }, function myError(response) {
-            notificationFactory.showError("Document shared not edited", function(){});
-        });
-    }
-
+/* Edit user document
+*/
     $scope.newEditModal = function() {
 
         if ($scope.currentDocumentId == undefined) {
@@ -150,6 +129,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
+/* Delete user document
+*/
     $scope.showWarningToDelete = function() {
         if ($scope.currentDocumentId == undefined) {
             notificationFactory.showError("Select a document to be deleted", function(){});
@@ -176,6 +157,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
+/* Delete Folder
+*/
     $scope.newFolderModal = function() {
         $('#newFolderModal').modal('toggle');
     }
@@ -199,6 +182,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
+/* Rename folder
+*/
     $scope.newRenameFolderModal = function(){
 
         if ($scope.currentFolderId == $scope.rootFolderId)
@@ -222,7 +207,33 @@ function homeController($scope, $http, Session, $location, $state, notificationF
            notificationFactory.showError("Folder not renamed", function(){});
         });
     }
-/*Abre o modal de compartilhar o documento
+
+/* Delete a folder
+*/
+    $scope.deleteFolderModal = function(){
+        if ($scope.currentFolderId == $scope.rootFolderId)
+            notificationFactory.showError("Select a folder!", function(){});
+        else
+            $('#deleteWarningFolderModal').modal('toggle');
+
+    }
+
+
+    $scope.deleteFolder = function() {
+        $http({
+          method : "DELETE",
+          url : "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId
+        }).then(function mySucces(response) {
+          $('#deleteWarningFolderModal').modal('toggle');
+          $scope.getFolders()
+          notificationFactory.showSuccess("Folder deleted!", function(){});
+
+        }, function myError(response) {
+          notificationFactory.showError("Folder not deleted", function(){});
+        });
+    }
+
+/* Share a document
 */
     $scope.newShareModal = function() {
         if ($scope.currentDocumentId == undefined) {
@@ -253,6 +264,20 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         /*}*/
     }
 
+/* Share a document
+*/
+    $scope.newSharedDocumentModal = function(){
+        if($scope.currentSharedDocument.permission == "read"){
+            $('#viewSharedDocumentModal').modal('toggle');
+        }else if ($scope.currentSharedDocument.permission == "write") {
+            $scope.documentSharedToEdit = {}
+            $scope.documentSharedToEdit.document_content = $scope.currentSharedDocument.content
+            $('#editSharedDocumentModal').modal('toggle');
+        }
+    }
+
+/* Update shared eith me documents
+*/
     $scope.getSharedWithMe = function() {
         $http({
             method : "GET",
@@ -268,29 +293,28 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
-    $scope.deleteFolderModal = function(){
-        if ($scope.currentFolderId == $scope.rootFolderId)
-            notificationFactory.showError("Select a folder!", function(){});
-        else
-            $('#deleteWarningFolderModal').modal('toggle');
-
-    }
-
-
-    $scope.deleteFolder = function() {
+/* Edit a shared with user document
+*/
+    $scope.updateDocumentShared = function() {
         $http({
-          method : "DELETE",
-          url : "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId
+            method : "PUT",
+            url : "http://127.0.0.1:5000/share/edit" ,
+            data: {
+                ownerId: $scope.currentDocument.ownerId,
+                document_content: $scope.documentSharedToEdit.document_content,
+                document_id: $scope.currentDocumentId
+            }
         }).then(function mySucces(response) {
-          $('#deleteWarningFolderModal').modal('toggle');
-          $scope.getFolders()
-          notificationFactory.showSuccess("Folder deleted!", function(){});
+            $('#editSharedDocumentModal').modal('toggle');
+            $scope.getSharedWithMe()
+            notificationFactory.showSuccess("Document shared edited!", function(){});
 
         }, function myError(response) {
-          notificationFactory.showError("Folder not deleted", function(){});
+            notificationFactory.showError("Document shared not edited", function(){});
         });
     }
-
+/* When you click on a document
+*/
     $scope.$on('selection-changed', function (e, node) {
         //node - selected node in tree
         $scope.selectedNode = node;
