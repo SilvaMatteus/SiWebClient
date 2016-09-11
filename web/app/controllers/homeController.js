@@ -6,6 +6,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     $scope.username = Session.getName();
     $scope.userId = Session.getId();
+    /*$scope.email = Session.getEmail();*/
     $scope.currentDocument = {}
     $scope.currentDocumentId = undefined
     $scope.currentSharedDocument = {}
@@ -51,6 +52,18 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
         }, function myError(response) {
            notificationFactory.showError("Unable to retrieve emails of other users!", function(){});
+        });
+    }
+
+    $scope.getEmailCurrentUser = function() {
+        $http({
+           method : "GET",
+           url : "http://127.0.0.1:5000/email/" + $scope.userId
+        }).then(function mySucces(response) {
+            console.log(response.data)
+            $scope.emailOfUser = response.data
+        }, function myError(response) {
+           notificationFactory.showError("Unable to retrieve emails from current user", function(){});
         });
     }
 
@@ -220,13 +233,13 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     $scope.shareDocument = function() {
-        console.log($scope.userId)
-        console.log($scope.currentDocument.ownerId)
-        if($scope.userId == $scope.currentDocument.ownerId){
+        /*Não esta funcionndo pois nao estamos conseguindo o email do usuário logado*/
+        /*$scope.getEmailCurrentUser()
+        if($scope.emailOfUser == $scope.sharing.other_user_email){
             notificationFactory.showError("Can't share your own document with you", function(){});
             $('#shareModal').modal('toggle');
         }
-        else{
+        else{*/
             $http({
                 method : "PUT",
                 url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
@@ -237,7 +250,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             }, function myError(response) {
                 notificationFactory.showError("Document not shared", function(){});
             });
-        }
+        /*}*/
     }
 
     $scope.getSharedWithMe = function() {
@@ -259,6 +272,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $('#deleteWarningFolderModal').modal('toggle');
 
     }
+
 
     $scope.deleteFolder = function() {
         $http({
@@ -292,6 +306,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         }
     });
 
+/* When you click on a document shared with you
+*/
     $scope.setCurrentDocumentShared = function(index){
         $scope.currentSharedDocument.ownerId = $scope.documents_shared_with_me[index].ownerId
         $scope.currentSharedDocumentId = $scope.documents_shared_with_me[index].id

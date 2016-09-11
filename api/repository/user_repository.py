@@ -42,6 +42,13 @@ class UserRepository(object):
             emails.append(user.email)
         return emails
 
+    def get_email(self, id):
+        email = ""
+        for user in self.list_of_users:
+            if user.id == id:
+                email = user.email
+        return email
+
     def get(self, id):
         for user in self.list_of_users:
             if user.id == id:

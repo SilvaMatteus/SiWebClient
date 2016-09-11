@@ -25,6 +25,11 @@ def get_registered_emails():
     list_of_emails = user_repository.get_all_emails()
     return json.dumps(list_of_emails, default=default_parser), 200
 
+@user_blueprint.route("/email/<string:id>", methods=['GET'])
+def get_email_id(id):
+    email = user_repository.get_email(id)
+    return json.dumps(email, default=default_parser), 200
+
 @user_blueprint.route("/user/<string:email>/<string:password>", methods=['GET'])
 def autenticate(email, password):
     user = user_repository.autenticate(email, password)
