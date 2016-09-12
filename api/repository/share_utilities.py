@@ -12,6 +12,10 @@ class Share_utilities(object):
         super(Share_utilities, self).__init__()
 
     def share(self, user, other_user, document_id, permission):
+
+        if (user == other_user):
+            raise ValueError('You cannot share to yourself!')
+
         if(not self.doc_already_shared(user, other_user, document_id, permission)):
             document_from_user = user.search_document(document_id)
             if(permission == "write"):

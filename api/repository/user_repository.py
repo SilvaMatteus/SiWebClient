@@ -136,6 +136,7 @@ class UserRepository(object):
         '''
         user = self.get(user_id)
         other_user = self.get_by_email(other_user_email)
+
         share_utilities.share(user, other_user, document_id, permission)
 
 

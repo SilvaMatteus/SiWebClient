@@ -6,7 +6,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     $scope.username = Session.getName();
     $scope.userId = Session.getId();
-    /*$scope.email = Session.getEmail();*/
+    $scope.email = Session.getEmail();
     $scope.currentDocument = {}
     $scope.currentDocumentId = undefined
     $scope.currentSharedDocument = {}
@@ -47,9 +47,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
            method : "GET",
            url : "http://127.0.0.1:5000/list-emails"
         }).then(function mySucces(response) {
-
             $scope.listOfEmails = response.data
-
+            $scope.listOfEmails.splice($scope.listOfEmails.indexOf($scope.email), 1);
         }, function myError(response) {
            notificationFactory.showError("Unable to retrieve emails of other users!", function(){});
         });
@@ -241,7 +240,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.getSharedWithMe()
             notificationFactory.showSuccess("Document shared!", function(){});
         }, function myError(response) {
-            notificationFactory.showError("Document not shared", function(){});
+            notificationFactory.showError(response.data, function(){});
         });
     }
 
@@ -267,17 +266,13 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             method : "PUT",
             url : "http://127.0.0.1:5000/document/" + $scope.userId,
             data: {
-                document_name: $scope.documentToEdit.document_name,
-                document_content: $scope.documentToEdit.document_content,
-                document_ext: $scope.documentToEdit.document_ext,
+                document_name: $scope.currentDocument.title,
+                document_content: $scope.currentDocument.content,
+                document_ext: $scope.currentDocument.extension,
                 document_id: $scope.currentDocumentId
             }
         }).then(function mySucces(response) {
             $('#newEditModal').modal('toggle');
-
-            $scope.currentDocument.title = $scope.documentToEdit.document_name
-            $scope.currentDocument.content = $scope.documentToEdit.document_content
-            $scope.currentDocument.extension = $scope.documentToEdit.document_ext
             $scope.getFolders()
 
             notificationFactory.showSuccess("Document edited!", function(){});

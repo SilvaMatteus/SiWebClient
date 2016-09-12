@@ -131,16 +131,16 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Title</label>
-                            <input ng-model="documentToEdit.document_name" class="form-control" />
+                            <input ng-model="currentDocument.title" class="form-control" />
                             <div class="radio">
                                 <label>
-                                    <input ng-model="documentToEdit.document_ext" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt">
+                                    <input ng-model="currentDocument.extension" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt">
                                     .txt
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input ng-model="documentToEdit.document_ext" type="radio" name="optionsRadios" id="optionsRadios2" value=".md">
+                                    <input ng-model="currentDocument.extension" type="radio" name="optionsRadios" id="optionsRadios2" value=".md">
                                     .md
                                 </label>
                             </div>
@@ -149,7 +149,7 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Content</label>
-                            <textarea ng-model="documentToEdit.document_content" class="form-control" rows="10" cols="20"></textarea>
+                            <textarea ng-model="currentDocument.content" class="form-control" rows="10" cols="20"></textarea>
                         </div>
                     </div>
                 </form>
