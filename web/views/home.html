@@ -14,18 +14,18 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Document<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-click="newCreateModal()"><a href="#">New</a></li>
-                        <li ng-hide="currentDocument.permission=='read'" ng-click="editModalHandle()"><a href="#">Edit</a></li>
-                        <li ng-click="showWarningToDelete()"><a href="#">Delete</a></li>
-                        <li ng-hide="currentDocument.permission!=undefined" ng-click="newShareModal()"><a href="#">Share</a><li>
+                        <li ng-click="newCreateModal()"><a href="#">New<span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-hide="currentDocument.permission=='read'" ng-click="editModalHandle()"><a href="#">Edit<span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-click="showWarningToDelete()"><a href="#">Delete<span class="glyphicon glyphicon-minus pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-hide="currentDocument.permission!=undefined" ng-click="newShareModal()"><a href="#">Share<span class="glyphicon glyphicon-globe pull-right" aria-hidden="true"></span></a><li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Folder<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-click="newFolderModal()"><a href="#">New</a></li>
-                        <li ng-click="newRenameFolderModal()"><a href="#">Rename</a></li>
-                        <li ng-click="deleteFolderModal()"><a href="#">Delete</a></li>
+                        <li ng-click="newFolderModal()"><a href="#">New<span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></a></li>
+                        <li ng-click="newRenameFolderModal()"><a href="#">Rename<span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></a></li>
+                        <li ng-click="deleteFolderModal()"><a href="#">Delete<span class="glyphicon glyphicon-minus pull-right" aria-hidden="true"></a></li>
                     </ul>
                 </li>
             </ul>
@@ -65,7 +65,8 @@
             </div>
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Shared With Me <span class="badge">{{documents_shared_with_me.length}}</span></h3>
+
+                    <h3 class="panel-title">Shared With Me <span class="badge pull-right">{{documents_shared_with_me.length}}</span></h3>
                 </div>
                 <div class="panel-body text-left">
                     <tree ng-click="teste" nodes='treeNodesShared'></tree>
