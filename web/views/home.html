@@ -15,7 +15,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Document<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-click="newCreateModal()"><a href="#">New</a></li>
-                        <li ng-click="newEditModal()"><a href="#">Edit</a></li>
+                        <li ng-hide="currentDocument.permission=='read'" ng-click="editModalHandle()"><a href="#">Edit</a></li>
                         <li ng-click="showWarningToDelete()"><a href="#">Delete</a></li>
                         <li ng-click="newShareModal()"><a href="#">Share</a><li>
                     </ul>
@@ -68,9 +68,7 @@
                     <h3 class="panel-title">Shared With Me <span class="badge">{{documents_shared_with_me.length}}</span></h3>
                 </div>
                 <div class="panel-body text-left">
-                    <div ng-repeat="document in documents_shared_with_me">
-                        <a ng-click="setCurrentDocumentShared($index)" class="btn btn-default btn-xs"> {{ document.name }} </a>
-                    </div>
+                    <tree ng-click="teste" nodes='treeNodesShared'></tree>
             </div>
         </div>
     </div>
@@ -313,14 +311,14 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Title</label>
-                            {{currentSharedDocument.title}}
-                            {{currentSharedDocument.extension}}
+                            {{currentDocument.title}}
+                            {{currentDocument.extension}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group">
                             <label>Content</label>
-                            <textarea ng-model="documentSharedToEdit.document_content" class="form-control" rows="10" cols="20"></textarea>
+                            <textarea ng-model="currentDocument.content" class="form-control" rows="10" cols="20"></textarea>
                         </div>
                     </div>
                 </form>
@@ -333,34 +331,3 @@
     </div>
 </div>
 
-<!-- View Shared Document Modal -->
-<div class="modal" id="viewSharedDocumentModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">You can't edit this shared document </h4>
-            </div>
-            <div class="modal-body text-justify">
-                <form>
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Title</label>
-                            {{currentSharedDocument.title}}
-                            {{currentSharedDocument.extension}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Content</label>
-                            {{currentSharedDocument.content}}
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>

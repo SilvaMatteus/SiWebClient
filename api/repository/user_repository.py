@@ -143,7 +143,6 @@ class UserRepository(object):
         '''pega os documentos compartilhados com o usuário
         '''
         documents = []
-        permissions = []
         user = self.get(user_id)
 
         new_shares = 0
@@ -156,9 +155,9 @@ class UserRepository(object):
             for docIdAndPermission in mapadeUsuariosEDocumentos[userId]:
                 try:
                     docAtual = userOwner.search_document(docIdAndPermission[0])
+                    docAtual.permission = docIdAndPermission[1]
                     documents.append(docAtual)
-                    permissions.append(docIdAndPermission[1])
                 except:
                     mapadeUsuariosEDocumentos[userId].remove(docIdAndPermission)
-        result = [documents, permissions, new_shares]
+        result = [documents, new_shares]
         return result

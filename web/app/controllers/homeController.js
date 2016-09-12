@@ -55,17 +55,6 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
-    $scope.getEmailCurrentUser = function() {
-        $http({
-           method : "GET",
-           url : "http://127.0.0.1:5000/email/" + $scope.userId
-        }).then(function mySucces(response) {
-            $scope.emailOfUser = response.data
-        }, function myError(response) {
-           notificationFactory.showError("Unable to retrieve emails from current user", function(){});
-        });
-    }
-
 /* New Document
 */
     $scope.newCreateModal = function() {
@@ -218,7 +207,6 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     }
 
-
     $scope.deleteFolder = function() {
         $http({
           method : "DELETE",
@@ -244,37 +232,17 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     $scope.shareDocument = function() {
-        /*Não esta funcionndo pois nao estamos conseguindo o email do usuário logado*/
-        /*$scope.getEmailCurrentUser()
-        if($scope.emailOfUser == $scope.sharing.other_user_email){
-            notificationFactory.showError("Can't share your own document with you", function(){});
+        $http({
+            method : "PUT",
+            url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
+            data: $scope.sharing
+        }).then(function mySucces(response) {
             $('#shareModal').modal('toggle');
-        }
-        else{*/
-            $http({
-                method : "PUT",
-                url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
-                data: $scope.sharing
-            }).then(function mySucces(response) {
-                $('#shareModal').modal('toggle');
-                $scope.getSharedWithMe()
-                notificationFactory.showSuccess("Document shared!", function(){});
-            }, function myError(response) {
-                notificationFactory.showError("Document not shared", function(){});
-            });
-        /*}*/
-    }
-
-/* Share a document
-*/
-    $scope.newSharedDocumentModal = function(){
-        if($scope.currentSharedDocument.permission == "read"){
-            $('#viewSharedDocumentModal').modal('toggle');
-        }else if ($scope.currentSharedDocument.permission == "write") {
-            $scope.documentSharedToEdit = {}
-            $scope.documentSharedToEdit.document_content = $scope.currentSharedDocument.content
-            $('#editSharedDocumentModal').modal('toggle');
-        }
+            $scope.getSharedWithMe()
+            notificationFactory.showSuccess("Document shared!", function(){});
+        }, function myError(response) {
+            notificationFactory.showError("Document not shared", function(){});
+        });
     }
 
 /* Update shared eith me documents
@@ -285,12 +253,37 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             url : "http://127.0.0.1:5000/share/" + $scope.userId,
         }).then(function mySucces(response) {
             $scope.documents_shared_with_me = response.data[0]
-            $scope.documents_shared_with_me_permissions = response.data[1]
-            if(response.data[2] != 0){
-                notificationFactory.showSuccess("You have "+ response.data[2] +" new documents shared you!", function(){});
+            $scope.treeNodesShared = response.data[0]
+            if(response.data[1] != 0){
+                notificationFactory.showSuccess("You have "+ response.data[1] +" new documents shared you!", function(){});
             }
         }, function myError(response) {
            notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function(){});
+        });
+    }
+
+    $scope.updateDocumentOwned = function() {
+        $http({
+            method : "PUT",
+            url : "http://127.0.0.1:5000/document/" + $scope.userId,
+            data: {
+                document_name: $scope.documentToEdit.document_name,
+                document_content: $scope.documentToEdit.document_content,
+                document_ext: $scope.documentToEdit.document_ext,
+                document_id: $scope.currentDocumentId
+            }
+        }).then(function mySucces(response) {
+            $('#newEditModal').modal('toggle');
+
+            $scope.currentDocument.title = $scope.documentToEdit.document_name
+            $scope.currentDocument.content = $scope.documentToEdit.document_content
+            $scope.currentDocument.extension = $scope.documentToEdit.document_ext
+            $scope.getFolders()
+
+            notificationFactory.showSuccess("Document edited!", function(){});
+
+        }, function myError(response) {
+            notificationFactory.showError("Document not edited", function(){});
         });
     }
 
@@ -302,7 +295,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             url : "http://127.0.0.1:5000/share/edit" ,
             data: {
                 ownerId: $scope.currentDocument.ownerId,
-                document_content: $scope.documentSharedToEdit.document_content,
+                document_content: $scope.currentDocument.content,
                 document_id: $scope.currentDocumentId
             }
         }).then(function mySucces(response) {
@@ -314,38 +307,31 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showError("Document shared not edited", function(){});
         });
     }
-/* When you click on a document
-*/
+
+    /* When you click on a document*/
     $scope.$on('selection-changed', function (e, node) {
         //node - selected node in tree
         $scope.selectedNode = node;
-
         if (node.is_folder) {
             $scope.currentFolderId = node.id
             $scope.currentDocumentId = undefined
         } else {
-            $scope.currentDocument.permission = undefined
             $scope.currentFolderId = $scope.rootFolderId
             $scope.currentDocumentId = node.id
             $scope.currentDocument.content = node.content
             $scope.currentDocument.title = node.name
             $scope.currentDocument.extension = node.extension
             $scope.currentDocument.ownerId = node.ownerId
+            $scope.currentDocument.permission = node.permission
         }
     });
 
-/* When you click on a document shared with you
-*/
-    $scope.setCurrentDocumentShared = function(index){
-        $scope.currentSharedDocument.ownerId = $scope.documents_shared_with_me[index].ownerId
-        $scope.currentSharedDocumentId = $scope.documents_shared_with_me[index].id
-        $scope.currentSharedDocument.content = $scope.documents_shared_with_me[index].content
-        $scope.currentSharedDocument.title = $scope.documents_shared_with_me[index].name
-        $scope.currentSharedDocument.extension = $scope.documents_shared_with_me[index].extension
-        $scope.currentSharedDocument.permission = $scope.documents_shared_with_me_permissions[index]
-        $scope.newSharedDocumentModal()
+    $scope.editModalHandle = function(){
+        if ($scope.currentDocument.permission == undefined)
+            $('#newEditModal').modal('toggle');
+        if ($scope.currentDocument.permission == 'write')
+            $('#editSharedDocumentModal').modal('toggle');
     }
-
 
 
 }

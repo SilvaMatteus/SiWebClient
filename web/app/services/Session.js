@@ -22,7 +22,11 @@ app.factory('Session', function(){
 
         getId: function() {
             return sessionStorage.user.id = JSON.parse(sessionStorage.user).id;
-        }
+        },
+
+        getEmail: function(){
+            return sessionStorage.user.email = JSON.parse(sessionStorage.user).email;
+        },
     };
 
 });
