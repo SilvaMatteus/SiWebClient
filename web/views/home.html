@@ -17,7 +17,7 @@
                         <li ng-click="newCreateModal()"><a href="#">New</a></li>
                         <li ng-hide="currentDocument.permission=='read'" ng-click="editModalHandle()"><a href="#">Edit</a></li>
                         <li ng-click="showWarningToDelete()"><a href="#">Delete</a></li>
-                        <li ng-click="newShareModal()"><a href="#">Share</a><li>
+                        <li ng-hide="currentDocument.permission!=undefined" ng-click="newShareModal()"><a href="#">Share</a><li>
                     </ul>
                 </li>
                 <li class="dropdown">

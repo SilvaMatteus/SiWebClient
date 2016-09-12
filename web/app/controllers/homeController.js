@@ -327,6 +327,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     });
 
     $scope.editModalHandle = function(){
+
+        if ($scope.currentDocumentId == undefined){
+            notificationFactory.showError("Select a document to be edited!", function(){});
+            return;
+        }
+
         if ($scope.currentDocument.permission == undefined)
             $('#newEditModal').modal('toggle');
         if ($scope.currentDocument.permission == 'write')
