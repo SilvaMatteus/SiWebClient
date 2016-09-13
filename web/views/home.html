@@ -23,9 +23,9 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Folder<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-click="newFolderModal()"><a href="#">New<span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></a></li>
-                        <li ng-click="newRenameFolderModal()"><a href="#">Rename<span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></a></li>
-                        <li ng-click="deleteFolderModal()"><a href="#">Delete<span class="glyphicon glyphicon-minus pull-right" aria-hidden="true"></a></li>
+                        <li ng-click="newFolderModal()"><a href="#">New<span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-click="newRenameFolderModal()"><a href="#">Rename<span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-click="deleteFolderModal()"><a href="#">Delete<span class="glyphicon glyphicon-minus pull-right" aria-hidden="true"></span></a></li>
                     </ul>
                 </li>
             </ul>
@@ -47,7 +47,7 @@
             <div class="panel-body">
                 <div class="text-center">
                     <h3>{{ currentDocument.title }} {{ currentDocument.extension }} {{ currentDocument.permission }} </h3>
-                    Current document id for debug ==> {{currentDocumentId}}
+
                 </div>
                 <div class="text-justified">
                     {{ currentDocument.content }}
@@ -70,6 +70,7 @@
                 </div>
                 <div class="panel-body text-left">
                     <tree ng-click="teste" nodes='treeNodesShared'></tree>
+                </div>
             </div>
         </div>
     </div>
@@ -135,13 +136,13 @@
                             <input ng-model="currentDocument.title" placeholder="Document Name" class="form-control" />
                             <div class="radio">
                                 <label>
-                                    <input ng-model="currentDocument.extension" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt">
+                                    <input ng-model="currentDocument.extension" type="radio" name="optionsRadios" id="optionsRadios3" value=".txt">
                                     .txt
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input ng-model="currentDocument.extension" type="radio" name="optionsRadios" id="optionsRadios2" value=".md">
+                                    <input ng-model="currentDocument.extension" type="radio" name="optionsRadios" id="optionsRadios4" value=".md">
                                     .md
                                 </label>
                             </div>
@@ -270,7 +271,7 @@
                 <input ng-model="sharing.other_user_email" placeholder="User Email" class="form-control" />
                 <div class="radio">
                     <label>
-                        <input ng-model="sharing.permission" type="radio" name="permission" id="editAndViewRadio" value="read">
+                        <input ng-model="sharing.permission" type="radio" name="permission" id="editAndViewRadio" value="read" ng-value="true">
                         Just can read.
                     </label>
                 </div>

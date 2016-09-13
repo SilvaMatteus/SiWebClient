@@ -3,6 +3,9 @@
 */
 app.controller('loginController', loginController);
 
+/*
+    Do the user's login and set the user's session
+ */
 function loginController($scope, $timeout, notificationFactory, Session, $http, $state) {
 
     $scope.count = 1024;

@@ -1,7 +1,9 @@
 app.controller('registerController', registerController);
 
 
-
+/*
+    Create a new user
+ */
 function registerController($scope, notificationFactory, $http, $state) {
 
     $scope.save = function() {

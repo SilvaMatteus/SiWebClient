@@ -17,19 +17,21 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         $state.transitionTo("app.login");
     }
 
-/* What is new!
-*/
-    $scope.whatIsNewModal = function() {
+    /*
+     What is new!
+     */
+    $scope.whatIsNewModal = function () {
         $('#whatIsNewModal').modal('toggle');
     }
 
-/* Update user documents
-*/
-    $scope.getFolders = function() {
+    /*
+     Update user documents
+     */
+    $scope.getFolders = function () {
 
         $http({
-           method : "GET",
-           url : "http://127.0.0.1:5000/folders_tree/" + $scope.userId
+            method: "GET",
+            url: "http://127.0.0.1:5000/folders_tree/" + $scope.userId
         }).then(function mySucces(response) {
 
             $scope.treeNodes = response.data[0].children
@@ -38,50 +40,63 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.currentDocumentId = undefined
 
         }, function myError(response) {
-           notificationFactory.showError("Unable to retrieve folders! Try logging again.", function(){});
+            notificationFactory.showError("Unable to retrieve folders! Try logging again.", function () {
+            });
         });
     }
 
-    $scope.getListOfEmails = function() {
+    /*
+     Get a list of emails to be shown to user
+     */
+    $scope.getListOfEmails = function () {
         $http({
-           method : "GET",
-           url : "http://127.0.0.1:5000/list-emails"
+            method: "GET",
+            url: "http://127.0.0.1:5000/list-emails"
         }).then(function mySucces(response) {
             $scope.listOfEmails = response.data
             $scope.listOfEmails.splice($scope.listOfEmails.indexOf($scope.email), 1);
         }, function myError(response) {
-           notificationFactory.showError("Unable to retrieve emails of other users!", function(){});
+            notificationFactory.showError("Unable to retrieve emails of other users!", function () {
+            });
         });
     }
 
-/* New Document
-*/
-    $scope.newCreateModal = function() {
+    /*
+     New Document modal
+     */
+    $scope.newCreateModal = function () {
         $('#newCreateModal').modal('toggle');
     }
 
-    $scope.createDocument = function() {
+    /*
+     Post a new document
+     */
+    $scope.createDocument = function () {
         $http({
-           method : "POST",
-           url : "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.currentFolderId,
-           data: $scope.newDocument
+            method: "POST",
+            url: "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.currentFolderId,
+            data: $scope.newDocument
         }).then(function mySucces(response) {
-           $('#newCreateModal').modal('toggle');
-           $scope.getFolders()
-           $scope.newDocument = undefined;
-           notificationFactory.showSuccess("Document saved!", function(){});
+            $('#newCreateModal').modal('toggle');
+            $scope.getFolders()
+            $scope.newDocument = undefined;
+            notificationFactory.showSuccess("Document saved!", function () {
+            });
 
         }, function myError(response) {
-           notificationFactory.showError("Document not saved", function(){});
+            notificationFactory.showError("Document not saved", function () {
+            });
         });
     }
 
-/* Edit user document
-*/
-    $scope.newEditModal = function() {
+    /*
+     Edit user document
+     */
+    $scope.newEditModal = function () {
 
         if ($scope.currentDocumentId == undefined) {
-            notificationFactory.showError("Select a document to be edited", function(){});
+            notificationFactory.showError("Select a document to be edited", function () {
+            });
         } else {
             $scope.documentToEdit = {}
             $scope.documentToEdit.document_name = $scope.currentDocument.title
@@ -92,10 +107,13 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
     }
 
-    $scope.updateDocumentOwned = function() {
+    /*
+     Update the user's document
+     */
+    $scope.updateDocumentOwned = function () {
         $http({
-            method : "PUT",
-            url : "http://127.0.0.1:5000/document/" + $scope.userId,
+            method: "PUT",
+            url: "http://127.0.0.1:5000/document/" + $scope.userId,
             data: {
                 document_name: $scope.documentToEdit.document_name,
                 document_content: $scope.documentToEdit.document_content,
@@ -110,161 +128,200 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.currentDocument.extension = $scope.documentToEdit.document_ext
             $scope.getFolders()
 
-            notificationFactory.showSuccess("Document edited!", function(){});
+            notificationFactory.showSuccess("Document edited!", function () {
+            });
 
         }, function myError(response) {
-            notificationFactory.showError("Document not edited", function(){});
+            notificationFactory.showError("Document not edited", function () {
+            });
         });
     }
 
-/* Delete user document
-*/
-    $scope.showWarningToDelete = function() {
+    /*
+     Delete user document
+     */
+    $scope.showWarningToDelete = function () {
         if ($scope.currentDocumentId == undefined) {
-            notificationFactory.showError("Select a document to be deleted", function(){});
+            notificationFactory.showError("Select a document to be deleted", function () {
+            });
         } else {
             $('#deleteWarningModal').modal('toggle');
         }
     }
 
-    $scope.deleteDocument = function() {
+    $scope.deleteDocument = function () {
         $('#deleteWarningModal').modal('toggle');
         $http({
-            method : "DELETE",
-            url : "http://127.0.0.1:5000/document/" + $scope.userId,
+            method: "DELETE",
+            url: "http://127.0.0.1:5000/document/" + $scope.userId,
             data: {document_id: $scope.currentDocumentId}
         }).then(function mySucces(response) {
             $scope.currentDocument.title = undefined
             $scope.currentDocument.content = undefined
             $scope.currentDocument.extension = undefined
-            notificationFactory.showSuccess("Document deleted!", function(){});
+            notificationFactory.showSuccess("Document deleted!", function () {
+            });
             $scope.getFolders()
 
         }, function myError(response) {
-            notificationFactory.showError("Document not deleted", function(){});
+            notificationFactory.showError("Document not deleted", function () {
+            });
         });
     }
 
-/* Delete Folder
-*/
-    $scope.newFolderModal = function() {
+    /*
+     Delete  modal
+     */
+    $scope.newFolderModal = function () {
         $('#newFolderModal').modal('toggle');
     }
 
-    $scope.createFolder = function() {
+    /*
+     Create a new folder
+     */
+    $scope.createFolder = function () {
         var data = {
-                parent_folder_id: $scope.currentFolderId,
-                folder_name: $scope.newFolder.folder_name
-            };
+            parent_folder_id: $scope.currentFolderId,
+            folder_name: $scope.newFolder.folder_name
+        };
         $http({
-           method : "POST",
-           url : "http://127.0.0.1:5000/folder/" + $scope.userId,
-           data: data
+            method: "POST",
+            url: "http://127.0.0.1:5000/folder/" + $scope.userId,
+            data: data
         }).then(function mySucces(response) {
-           $('#newFolderModal').modal('toggle');
-           $scope.getFolders()
-           $scope.newFolder = undefined;
-           notificationFactory.showSuccess("Folder created!", function(){});
+            $('#newFolderModal').modal('toggle');
+            $scope.getFolders()
+            $scope.newFolder = undefined;
+            notificationFactory.showSuccess("Folder created!", function () {
+            });
         }, function myError(response) {
-           notificationFactory.showError("Folder not created", function(){});
+            notificationFactory.showError("Folder not created", function () {
+            });
         });
     }
 
-/* Rename folder
-*/
-    $scope.newRenameFolderModal = function(){
+    /*
+     Rename folder modal
+     */
+    $scope.newRenameFolderModal = function () {
 
         if ($scope.currentFolderId == $scope.rootFolderId)
-            notificationFactory.showError("Select a folder!", function(){});
+            notificationFactory.showError("Select a folder!", function () {
+            });
         else
             $('#renameFolderModal').modal('toggle');
 
     }
 
-    $scope.renameFolder = function() {
+    /*
+     Rename folder
+     */
+    $scope.renameFolder = function () {
         $http({
-           method : "PUT",
-           url : "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId,
-           data: $scope.newNameFolder
-         }).then(function mySucces(response) {
-           $('#renameFolderModal').modal('toggle');
-           $scope.getFolders()
-           notificationFactory.showSuccess("Folder renamed!", function(){});
+            method: "PUT",
+            url: "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId,
+            data: $scope.newNameFolder
+        }).then(function mySucces(response) {
+            $('#renameFolderModal').modal('toggle');
+            $scope.getFolders()
+            notificationFactory.showSuccess("Folder renamed!", function () {
+            });
 
         }, function myError(response) {
-           notificationFactory.showError("Folder not renamed", function(){});
+            notificationFactory.showError("Folder not renamed", function () {
+            });
         });
     }
 
-/* Delete a folder
-*/
-    $scope.deleteFolderModal = function(){
+    /*
+     Delete folder modal
+     */
+    $scope.deleteFolderModal = function () {
         if ($scope.currentFolderId == $scope.rootFolderId)
-            notificationFactory.showError("Select a folder!", function(){});
+            notificationFactory.showError("Select a folder!", function () {
+            });
         else
             $('#deleteWarningFolderModal').modal('toggle');
 
     }
 
-    $scope.deleteFolder = function() {
+    /*
+     Delete a folder and its documents
+     */
+    $scope.deleteFolder = function () {
         $http({
-          method : "DELETE",
-          url : "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId
+            method: "DELETE",
+            url: "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId
         }).then(function mySucces(response) {
-          $('#deleteWarningFolderModal').modal('toggle');
-          $scope.getFolders()
-          notificationFactory.showSuccess("Folder deleted!", function(){});
+            $('#deleteWarningFolderModal').modal('toggle');
+            $scope.getFolders()
+            notificationFactory.showSuccess("Folder deleted!", function () {
+            });
 
         }, function myError(response) {
-          notificationFactory.showError("Folder not deleted", function(){});
+            notificationFactory.showError("Folder not deleted", function () {
+            });
         });
     }
 
-/* Share a document
-*/
-    $scope.newShareModal = function() {
+    /*
+     Show share document modal
+     */
+    $scope.newShareModal = function () {
         if ($scope.currentDocumentId == undefined) {
-            notificationFactory.showError("Select a document to be shared", function(){});
+            notificationFactory.showError("Select a document to be shared", function () {
+            });
         } else {
             $('#shareModal').modal('toggle');
         }
     }
 
-    $scope.shareDocument = function() {
+    /*
+     Share a document
+     */
+    $scope.shareDocument = function () {
         $http({
-            method : "PUT",
-            url : "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
+            method: "PUT",
+            url: "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
             data: $scope.sharing
         }).then(function mySucces(response) {
             $('#shareModal').modal('toggle');
             $scope.getSharedWithMe()
-            notificationFactory.showSuccess("Document shared!", function(){});
+            notificationFactory.showSuccess("Document shared!", function () {
+            });
         }, function myError(response) {
-            notificationFactory.showError(response.data, function(){});
+
+            notificationFactory.showError("Unable to share", function () {
+            });
         });
     }
 
-/* Update shared eith me documents
-*/
-    $scope.getSharedWithMe = function() {
+    /*
+     Update documents shared with me
+     */
+    $scope.getSharedWithMe = function () {
         $http({
-            method : "GET",
-            url : "http://127.0.0.1:5000/share/" + $scope.userId,
+            method: "GET",
+            url: "http://127.0.0.1:5000/share/" + $scope.userId,
         }).then(function mySucces(response) {
             $scope.documents_shared_with_me = response.data[0]
             $scope.treeNodesShared = response.data[0]
-            if(response.data[1] != 0){
-                notificationFactory.showSuccess("You have "+ response.data[1] +" new documents shared you!", function(){});
+            if (response.data[1] != 0) {
+                notificationFactory.showSuccess("You have " + response.data[1] + " new documents shared you!", function () {
+                });
             }
         }, function myError(response) {
-           notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function(){});
+            notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function () {
+            });
         });
     }
-
-    $scope.updateDocumentOwned = function() {
+    /*
+     Update user's document
+     */
+    $scope.updateDocumentOwned = function () {
         $http({
-            method : "PUT",
-            url : "http://127.0.0.1:5000/document/" + $scope.userId,
+            method: "PUT",
+            url: "http://127.0.0.1:5000/document/" + $scope.userId,
             data: {
                 document_name: $scope.currentDocument.title,
                 document_content: $scope.currentDocument.content,
@@ -275,19 +332,22 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $('#newEditModal').modal('toggle');
             $scope.getFolders()
 
-            notificationFactory.showSuccess("Document edited!", function(){});
+            notificationFactory.showSuccess("Document edited!", function () {
+            });
 
         }, function myError(response) {
-            notificationFactory.showError("Document not edited", function(){});
+            notificationFactory.showError("Document not edited", function () {
+            });
         });
     }
 
-/* Edit a shared with user document
-*/
-    $scope.updateDocumentShared = function() {
+    /*
+     Edit a shared document
+     */
+    $scope.updateDocumentShared = function () {
         $http({
-            method : "PUT",
-            url : "http://127.0.0.1:5000/share/edit" ,
+            method: "PUT",
+            url: "http://127.0.0.1:5000/share/edit",
             data: {
                 ownerId: $scope.currentDocument.ownerId,
                 document_content: $scope.currentDocument.content,
@@ -296,14 +356,18 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         }).then(function mySucces(response) {
             $('#editSharedDocumentModal').modal('toggle');
             $scope.getSharedWithMe()
-            notificationFactory.showSuccess("Document shared edited!", function(){});
+            notificationFactory.showSuccess("Document shared edited!", function () {
+            });
 
         }, function myError(response) {
-            notificationFactory.showError("Document shared not edited", function(){});
+            notificationFactory.showError("Document shared not edited", function () {
+            });
         });
     }
 
-    /* When you click on a document*/
+    /*
+     Handle document's click
+     */
     $scope.$on('selection-changed', function (e, node) {
         //node - selected node in tree
         $scope.selectedNode = node;
@@ -321,10 +385,14 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         }
     });
 
-    $scope.editModalHandle = function(){
+    /*
+     Handle modal to be shown to edit document
+     */
+    $scope.editModalHandle = function () {
 
-        if ($scope.currentDocumentId == undefined){
-            notificationFactory.showError("Select a document to be edited!", function(){});
+        if ($scope.currentDocumentId == undefined) {
+            notificationFactory.showError("Select a document to be edited!", function () {
+            });
             return;
         }
 
