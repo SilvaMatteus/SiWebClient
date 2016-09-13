@@ -15,7 +15,6 @@ class User(object):
         self.folder = Folder("root")
         self.shared_with_me = {}
         self.new_shares = 0
-        #self.shared_with_me_folder = Folder("shared_with_me_folder")
 
         if id != "0":
             self.id = id
@@ -71,6 +70,8 @@ class User(object):
         self.folder.delete_folder(folder_id)
 
     def receiveShare(self, user_id, document_id, permission):
+        ''' If a document is shared with this user: add the document id and document permission to shared_with_me documents
+        '''
         self.new_shares = self.new_shares + 1
         if(self.shared_with_me.has_key(user_id)):
             self.shared_with_me[user_id].append([document_id, permission])
@@ -78,7 +79,7 @@ class User(object):
             self.shared_with_me[user_id] = ([[document_id, permission]])
 
     def change_share(self, user_id, document_id, change_permission, permission):
-        '''Change document permission, have to delete and add
+        '''Change document permission
         '''
         self.shared_with_me[user_id].remove([document_id, permission])
         self.shared_with_me[user_id].append([document_id, change_permission])

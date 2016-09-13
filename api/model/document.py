@@ -11,6 +11,8 @@ class Document(object):
 
     def __init__(self, name, extension, content, ownerId):
         """ Constructor of Document.
+        Document has a name, an extension(.txt/.md), a contend, an ownerId, a exclusive id
+        Docment has two list of userIds to control witch user can read or write the document
         """
         super(Document, self).__init__()
         self.name = name
@@ -28,6 +30,8 @@ class Document(object):
         self.shareViewAndEdit.append(user_id)
 
     def change_share(self, user_id_to_change):
+        '''The methos change the user_id_to_change between shareViewAndEdit an shareView lists
+        '''
         for user_id in self.shareViewAndEdit:
             if(user_id == user_id_to_change):
                 self.shareViewAndEdit.remove(user_id_to_change)
@@ -38,6 +42,8 @@ class Document(object):
                 self.shareViewAndEdit.append(user_id_to_change)
 
     def removeShare(self, user_id_to_remove):
+        ''' Remove user Id from share lists
+        '''
         for user_id in self.shareViewAndEdit:
             if(user_id == user_id_to_remove):
                 self.shareViewAndEdit.remove(user_id_to_remove)

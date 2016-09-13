@@ -3,7 +3,8 @@
 import uuid
 
 class Folder(object):
-    """ Object that represents a folder of Reader """
+    """ Object that represents a folder of Reader
+    """
 
     def __init__(self, name):
         super(Folder, self).__init__()
@@ -41,6 +42,8 @@ class Folder(object):
         return None
 
     def to_json_tree(self):
+        ''' Return the folders in a node format
+        '''
         object = {}
         object['name'] = self.name
         object['id'] = self.id
