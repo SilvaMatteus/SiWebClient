@@ -89,7 +89,7 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Title</label>
-                            <input ng-model="newDocument.document_name" class="form-control" />
+                            <input ng-model="newDocument.document_name" placeholder="Document title" class="form-control" />
                             <div class="radio">
                                 <label>
                                     <input ng-model="newDocument.document_ext" type="radio" name="optionsRadios" id="optionsRadios1" value=".txt">
@@ -133,7 +133,7 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Title</label>
-                            <input ng-model="currentDocument.title" class="form-control" />
+                            <input ng-model="currentDocument.title" placeholder="Document Name" class="form-control" />
                             <div class="radio">
                                 <label>
                                     <input ng-model="currentDocument.extension" type="radio" name="optionsRadios" id="optionsRadios3" value=".txt">
@@ -189,7 +189,7 @@
                     <div class="row">
                         <div class="form-group">
                             <h1>Folder's name:</h1>
-                            <input ng-model="newFolder.folder_name" class="form-control" />
+                            <input ng-model="newFolder.folder_name" placeholder="Folder's name" class="form-control" />
                         </div>
                     </div>
                 </form>
@@ -211,7 +211,7 @@
                     <div class="row">
                         <div class="form-group">
                             <h1>Rename the folder:</h1>
-                            <input ng-model="newNameFolder.folder_name" class="form-control" />
+                            <input ng-model="newNameFolder.folder_name" placeholder="Folder's name" class="form-control" />
                         </div>
                     </div>
                 </form>
@@ -268,16 +268,7 @@
         <div class="modal-content">
             <div class="modal-body text-justify">
                 <h1>Share this document</h1>
-
-                {{ listOfEmails }}
-                <!--
-                <div>
-                    <select id="sel" ng-repeat="email in listOfEmails">
-                        <option ng-model="sharing.email_to_share" value="{{ email }}">{{ email }}</option>
-                    </select>
-                </div>-->
-
-                <input ng-model="sharing.other_user_email" class="form-control" />
+                <input ng-model="sharing.other_user_email" placeholder="User Email" class="form-control" />
                 <div class="radio">
                     <label>
                         <input ng-model="sharing.permission" type="radio" name="permission" id="editAndViewRadio" value="read" ng-value="true">
@@ -313,8 +304,9 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Title</label>
-                            {{currentDocument.title}}
-                            {{currentDocument.extension}}
+                            <div class="well well-sm">
+                              {{currentDocument.title}} {{currentDocument.extension}}
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -332,4 +324,3 @@
         </div>
     </div>
 </div>
-
