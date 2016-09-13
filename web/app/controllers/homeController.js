@@ -65,6 +65,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
      New Document modal
      */
     $scope.newCreateModal = function () {
+        $scope.newDocument = {}
+        $scope.newDocument.document_ext = ".txt"
         $('#newCreateModal').modal('toggle');
     }
 
@@ -272,6 +274,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showError("Select a document to be shared", function () {
             });
         } else {
+            $scope.sharing = {}
+            $scope.sharing.permission = "read"
             $('#shareModal').modal('toggle');
         }
     }

@@ -22,15 +22,7 @@ class UserRepository(object):
         document.id = "did"
         user.folder.id = "fid"
         user.add_document(user.folder.id, document)
-
-        usera = User('Godofredo', 'a@a.com', 'a', "uida")
-        documenta = Document("My document", ".txt", "I think to myself... what a bugged world!", "uida")
-        documenta.id = "dida"
-        usera.folder.id = "fida"
-        usera.add_document(usera.folder.id, documenta)
-
-        self.list_of_users = [user, usera]
-        self.share_document("uid","did","a@a.com","read")
+        self.list_of_users = [user]
 
     def list(self):
         ''' Return the list of user
