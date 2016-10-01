@@ -32,7 +32,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
 
         $http({
             method: "GET",
-            url: "http://127.0.0.1:5000/folders_tree/" + $scope.userId
+            url: "http://127.0.0.1:5000/folders_tree/" + $scope.userId + "/" + $scope.token
         }).then(function mySucces(response) {
 
             $scope.treeNodes = response.data[0].children
@@ -41,8 +41,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.currentDocumentId = undefined
 
         }, function myError(response) {
-            notificationFactory.showError("Unable to retrieve folders! Try logging again.", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Unable to retrieve folders! Try logging again.", function () {});
+            }
         });
     }
 
@@ -52,13 +56,17 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.getListOfEmails = function () {
         $http({
             method: "GET",
-            url: "http://127.0.0.1:5000/list-emails"
+            url: "http://127.0.0.1:5000/list-emails" + "/" + $scope.token
         }).then(function mySucces(response) {
             $scope.listOfEmails = response.data
             $scope.listOfEmails.splice($scope.listOfEmails.indexOf($scope.email), 1);
         }, function myError(response) {
-            notificationFactory.showError("Unable to retrieve emails of other users!", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Unable to retrieve list of user's emails!", function () {});
+            }
         });
     }
 
@@ -77,7 +85,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.createDocument = function () {
         $http({
             method: "POST",
-            url: "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.currentFolderId,
+            url: "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.currentFolderId  + "/" + $scope.token,
             data: $scope.newDocument
         }).then(function mySucces(response) {
             $('#newCreateModal').modal('toggle');
@@ -87,8 +95,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             });
 
         }, function myError(response) {
-            notificationFactory.showError("Document not saved", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Document not saved", function () {});
+            }
         });
     }
 
@@ -116,7 +128,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.updateDocumentOwned = function () {
         $http({
             method: "PUT",
-            url: "http://127.0.0.1:5000/document/" + $scope.userId,
+            url: "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.token,
             data: {
                 document_name: $scope.documentToEdit.document_name,
                 document_content: $scope.documentToEdit.document_content,
@@ -135,8 +147,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             });
 
         }, function myError(response) {
-            notificationFactory.showError("Document not edited", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Document not edited", function () {});
+            }
         });
     }
 
@@ -156,7 +172,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         $('#deleteWarningModal').modal('toggle');
         $http({
             method: "DELETE",
-            url: "http://127.0.0.1:5000/document/" + $scope.userId,
+            url: "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.token,
             data: {document_id: $scope.currentDocumentId}
         }).then(function mySucces(response) {
             $scope.currentDocument.title = undefined
@@ -167,8 +183,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.getFolders()
 
         }, function myError(response) {
-            notificationFactory.showError("Document not deleted", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Document not deleted", function () {});
+            }
         });
     }
 
@@ -189,7 +209,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         };
         $http({
             method: "POST",
-            url: "http://127.0.0.1:5000/folder/" + $scope.userId,
+            url: "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.token,
             data: data
         }).then(function mySucces(response) {
             $('#newFolderModal').modal('toggle');
@@ -198,8 +218,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showSuccess("Folder created!", function () {
             });
         }, function myError(response) {
-            notificationFactory.showError("Folder not created", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Folder not creaded!", function () {});
+            }
         });
     }
 
@@ -222,7 +246,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.renameFolder = function () {
         $http({
             method: "PUT",
-            url: "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId,
+            url: "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId + "/" + $scope.token,
             data: $scope.newNameFolder
         }).then(function mySucces(response) {
             $('#renameFolderModal').modal('toggle');
@@ -231,8 +255,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             });
 
         }, function myError(response) {
-            notificationFactory.showError("Folder not renamed", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Folder not renamed!", function () {});
+            }
         });
     }
 
@@ -254,7 +282,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.deleteFolder = function () {
         $http({
             method: "DELETE",
-            url: "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId
+            url: "http://127.0.0.1:5000/folder/" + $scope.userId + "/" + $scope.currentFolderId + "/" + $scope.token
         }).then(function mySucces(response) {
             $('#deleteWarningFolderModal').modal('toggle');
             $scope.getFolders()
@@ -262,8 +290,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             });
 
         }, function myError(response) {
-            notificationFactory.showError("Folder not deleted", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Folder not deleted!", function () {});
+            }
         });
     }
 
@@ -287,7 +319,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.shareDocument = function () {
         $http({
             method: "PUT",
-            url: "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId,
+            url: "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.currentDocumentId + "/" + $scope.token,
             data: $scope.sharing
         }).then(function mySucces(response) {
             $('#shareModal').modal('toggle');
@@ -295,9 +327,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showSuccess("Document shared!", function () {
             });
         }, function myError(response) {
-
-            notificationFactory.showError("Unable to share", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Unable to share document", function () {});
+            }
         });
     }
 
@@ -307,7 +342,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.getSharedWithMe = function () {
         $http({
             method: "GET",
-            url: "http://127.0.0.1:5000/share/" + $scope.userId,
+            url: "http://127.0.0.1:5000/share/" + $scope.userId + "/" + $scope.token
         }).then(function mySucces(response) {
             $scope.documents_shared_with_me = response.data[0]
             $scope.treeNodesShared = response.data[0]
@@ -316,8 +351,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
                 });
             }
         }, function myError(response) {
-            notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function () {});
+            }
         });
     }
     /*
@@ -326,7 +365,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.updateDocumentOwned = function () {
         $http({
             method: "PUT",
-            url: "http://127.0.0.1:5000/document/" + $scope.userId,
+            url: "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.token,
             data: {
                 document_name: $scope.currentDocument.title,
                 document_content: $scope.currentDocument.content,
@@ -341,8 +380,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             });
 
         }, function myError(response) {
-            notificationFactory.showError("Document not edited", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Document not edited!", function () {});
+            }
         });
     }
 
@@ -352,7 +395,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.updateDocumentShared = function () {
         $http({
             method: "PUT",
-            url: "http://127.0.0.1:5000/share/edit",
+            url: "http://127.0.0.1:5000/share/edit" + "/" + $scope.token,
             data: {
                 ownerId: $scope.currentDocument.ownerId,
                 document_content: $scope.currentDocument.content,
@@ -365,8 +408,12 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             });
 
         }, function myError(response) {
-            notificationFactory.showError("Document shared not edited", function () {
-            });
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Document shared not edited!", function () {});
+            }
         });
     }
 

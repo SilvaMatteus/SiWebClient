@@ -33,8 +33,12 @@ function loginController($scope, $timeout, notificationFactory, Session, $http, 
             $state.transitionTo("app.home");
 
         }, function myError(response) {
+            if (response.data == "Invalid token") {
+                notificationFactory.showError("User with in valid token", function(){});
+            } else {
+                notificationFactory.showError("User not registered!", function(){});
+            }
 
-            notificationFactory.showError("User not registered!", function(){});
 
         });
 
