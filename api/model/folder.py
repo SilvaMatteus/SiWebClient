@@ -69,7 +69,6 @@ class Folder(object):
         return object
 
     def delete_document(self, document_id):
-        document = self.find_document(document_id)
         for document in self.documents:
             if document_id == document.id:
                 self.documents.remove(document)
