@@ -27,6 +27,10 @@ app.factory('Session', function(){
         getEmail: function(){
             return sessionStorage.user.email = JSON.parse(sessionStorage.user).email;
         },
+
+        getToken: function() {
+            return sessionStorage.user.token = JSON.parse(sessionStorage.user).token;
+        },
     };
 
 });

@@ -7,6 +7,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     $scope.username = Session.getName();
     $scope.userId = Session.getId();
     $scope.email = Session.getEmail();
+    $scope.token = Session.getToken();
     $scope.currentDocument = {}
     $scope.currentDocumentId = undefined
     $scope.currentSharedDocument = {}
