@@ -70,9 +70,10 @@ class Folder(object):
 
     def delete_document(self, document_id):
         document = self.find_document(document_id)
-        if document != None:
-            self.documents.remove(document)
-            return True
+        for document in self.documents:
+            if document_id == document.id:
+                self.documents.remove(document)
+                return True
         for folder in self.folders:
             if folder.delete_document(document_id):
                 return True
