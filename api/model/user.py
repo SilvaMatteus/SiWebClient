@@ -1,8 +1,15 @@
 #-*- encoding: utf-8 -*-
 
 from model.folder import Folder
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer, BadSignature, SignatureExpired)
 
 import uuid
+
+
+from flask import Blueprint, request
+
+app = Blueprint('user_blueprint', __name__)
 
 class User(object):
     """ Object that represents a user of Reader """
@@ -26,6 +33,14 @@ class User(object):
             'name': self.name,
             'email': self.email,
             'id': self.id
+        }
+
+    def get_authentication(self):
+        return {
+            'name': self.name,
+            'email': self.email,
+            'id': self.id,
+            'token': self.generate_auth_token()
         }
 
     def search_folder(self, folder_id):
@@ -97,3 +112,20 @@ class User(object):
 
     def __repr__(self):
         return '%s: %s' % (self.name, self.email)
+
+    def generate_auth_token(self, expiration = 60):
+        s = Serializer('AA2318AEE9BC58FE1B36599871283', expires_in=expiration)
+        return s.dumps({'id': self.id})
+
+    def verify_auth_token(self, token):
+        s = Serializer('AA2318AEE9BC58FE1B36599871283')
+
+        #try:
+        data = s.loads(token)
+       # except SignatureExpired:
+        #    return None  # valid token, but expired
+        #except BadSignature:
+        #    return None  # invalid token
+
+        if (data['id'] != self.id):
+            raise Exception("Invalid token")

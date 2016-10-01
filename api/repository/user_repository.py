@@ -104,7 +104,7 @@ class UserRepository(object):
         '''
         for user in self.list_of_users:
             if user.email == email and user.password == password:
-                return user.get_basic_data()
+                return user.get_authentication()
 
         raise ValueError('User not registered!')
 
