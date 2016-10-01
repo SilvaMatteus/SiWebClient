@@ -55,9 +55,6 @@ class UserRepository(object):
             self.list_of_users = db.root.list_of_users
         super(UserRepository, self).__init__()
 
-
-
-
     def list(self):
         ''' Return the list of user
         '''
@@ -124,6 +121,7 @@ class UserRepository(object):
         If not finded raise a error
         '''
         user_updated = User(**kwargs)
+
         sucess = False
         for user in self.list_of_users:
             if user_updated == user:
@@ -243,3 +241,6 @@ class UserRepository(object):
         checkout(db.root)
         db.root.list_of_users = self.list_of_users
         transaction.commit()
+
+    def checkAuth(self, token):
+        return User.verify_auth_token(token)

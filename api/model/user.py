@@ -117,15 +117,13 @@ class User(object):
         s = Serializer('AA2318AEE9BC58FE1B36599871283', expires_in=expiration)
         return s.dumps({'id': self.id})
 
-    def verify_auth_token(self, token):
+    @staticmethod
+    def verify_auth_token(token):
         s = Serializer('AA2318AEE9BC58FE1B36599871283')
 
-        #try:
-        data = s.loads(token)
-       # except SignatureExpired:
-        #    return None  # valid token, but expired
-        #except BadSignature:
-        #    return None  # invalid token
-
-        if (data['id'] != self.id):
-            raise Exception("Invalid token")
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return False # valid token, but expired
+        except BadSignature:
+            return False  # invalid token
