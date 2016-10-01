@@ -7,6 +7,14 @@ from repository.share_utilities import Share_utilities
 
 share_utilities = Share_utilities()
 
+
+from flask import request, redirect, render_template
+
+from dobbin.database import Database
+from dobbin.persistent import Persistent
+import transaction
+from dobbin.persistent import checkout
+
 class UserRepository(object):
     """ Repository of users.
     This class is a singleton type. This class contans all users and the operations related with user data
@@ -14,15 +22,41 @@ class UserRepository(object):
     __metaclass__ = SingletonType
 
     def __init__(self):
+
+        db = Database('database')
+
+        if db .root is None:
+
+            root = Persistent()
+            root.list_of_users = []
+            db.elect (root)
+            transaction.commit()
+
+            checkout(db.root)
+
+            self.list_of_users = db.root.list_of_users
+
+            # Creating a user default to make easy the development
+            user = User('Fulano', 'email@email.com', 'pwd', "uid")
+            document = Document("My document", ".txt", "I think to myself... what a wonderful world!", "uid")
+            document.id = "did"
+            user.folder.id = "fid"
+            user.add_document(user.folder.id, document)
+
+            db.root.list_of_users.append(user)
+            db.root.list_of_users = self.list_of_users
+
+            transaction.commit()
+
+            checkout(db .root)
+
+            self.list_of_users = db .root.list_of_users
+        else:
+            self.list_of_users = db.root.list_of_users
         super(UserRepository, self).__init__()
 
-        # Creating a user default to make easy the development
-        user = User('Fulano', 'email@email.com', 'pwd', "uid")
-        document = Document("My document", ".txt", "I think to myself... what a wonderful world!", "uid")
-        document.id = "did"
-        user.folder.id = "fid"
-        user.add_document(user.folder.id, document)
-        self.list_of_users = [user]
+
+
 
     def list(self):
         ''' Return the list of user
@@ -82,6 +116,7 @@ class UserRepository(object):
             raise Exception('User already exists!')
 
         self.list_of_users.append(new_user)
+        self.save()
 
     def update(self, kwargs):
         '''Update an user information
@@ -98,12 +133,14 @@ class UserRepository(object):
                 sucess = True
         if not sucess:
             raise ValueError('ID not found')
+        self.save()
 
     def delete(self, id):
         ''' Delete a user using an ID
         '''
         user_to_delete = self.get(id)
         self.list_of_users.remove(user_to_delete)
+        self.save()
 
     def new_document(self, user_id, folder_id, document_name, document_ext, document_content = ""):
         ''' Find an user and add a new document to it
@@ -111,24 +148,28 @@ class UserRepository(object):
         user = self.get(user_id)
         documment = Document(document_name, document_ext, document_content, user_id)
         user.add_document(folder_id, documment)
+        self.save()
 
     def edit_document(self, user_id, document_name, document_ext, document_content, document_id):
         ''' Find a user and update document from it
         '''
         user = self.get(user_id)
         user.edit_document(document_id, document_name, document_ext, document_content)
+        self.save()
 
     def edit_document_shared(self, ownerId, document_content, document_id):
         ''' Find an user and a shared with the user document and update it
         '''
         user = self.get(ownerId)
         user.update_content(document_content,document_id)
+        self.save()
 
     def delete_document(self, user_id, document_id):
         ''' Find an user and delete a document from it
         '''
         user = self.get(user_id)
         user.delete_document(document_id)
+        self.save()
 
     def get_folders(self, user_id):
         ''' Find a user and return it folders
@@ -147,18 +188,21 @@ class UserRepository(object):
         '''
         user = self.get(user_id)
         user.user_add_folder(parent_folder_id, folder_name)
+        self.save()
 
     def rename_Folder(self, user_id, folder_id, folder_name):
         ''' Find a user and rename a spadific folder
         '''
         user = self.get(user_id)
         user.rename_folder(folder_id, folder_name)
+        self.save()
 
     def delete_folder(self, user_id, folder_id):
         ''' Find a user and delete a specific folder
         '''
         user = self.get(user_id)
         user.delete_folder(folder_id)
+        self.save()
 
     def share_document(self, user_id, document_id, other_user_email, permission):
         ''' Find an user by ID, find othe user by email and share a document from user to other user
@@ -191,3 +235,10 @@ class UserRepository(object):
                     mapadeUsuariosEDocumentos[userId].remove(docIdAndPermission)
         result = [documents, new_shares]
         return result
+
+    def save(self):
+
+        db = Database('database')
+        checkout(db.root)
+        db.root.list_of_users = self.list_of_users
+        transaction.commit()
