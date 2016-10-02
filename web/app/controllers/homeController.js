@@ -366,7 +366,6 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             method: "GET",
             url: "http://127.0.0.1:5000/trash/" + $scope.userId + "/" + $scope.token
         }).then(function mySucces(response) {
-            $scope.documents_trash = response.data
             $scope.treeNodesTrash = response.data
 
         }, function myError(response) {
@@ -377,6 +376,10 @@ function homeController($scope, $http, Session, $location, $state, notificationF
                 notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function () {});
             }
         });
+    }
+
+    $scope.restoreTrash = function () {
+
     }
 
     /*
@@ -454,6 +457,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.currentDocument.extension = node.extension
             $scope.currentDocument.ownerId = node.ownerId
             $scope.currentDocument.permission = node.permission
+            $scope.currentDocument.boolean_trash = node.boolean_trash
+
         }
     });
 

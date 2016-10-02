@@ -17,7 +17,8 @@
                         <li ng-click="newCreateModal()"><a href="#">New<span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span></a></li>
                         <li ng-hide="currentDocument.permission=='read'" ng-click="editModalHandle()"><a href="#">Edit<span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span></a></li>
                         <li ng-click="showWarningToDelete()"><a href="#">Delete<span class="glyphicon glyphicon-minus pull-right" aria-hidden="true"></span></a></li>
-                        <li ng-hide="currentDocument.permission!=undefined" ng-click="newShareModal()"><a href="#">Share<span class="glyphicon glyphicon-globe pull-right" aria-hidden="true"></span></a><li>
+                        <li ng-hide="currentDocument.permission!=undefined" ng-click="newShareModal()"><a href="#">Share<span class="glyphicon glyphicon-globe pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-hide="currentDocument.boolean_trash==False" ng-click="restoreTrash()"><a href="#">Restore<span class="glyphicon glyphicon-repeat pull-right" aria-hidden="true"></span></a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -75,7 +76,7 @@
             <div class="panel panel-danger">
                 <div class="panel-heading">
 
-                    <h3 class="panel-title">Trash <span class="badge pull-right">0</span></h3>
+                    <h3 class="panel-title">Trash <span class="badge pull-right">{{treeNodesTrash.length}}</span></h3>
                 </div>
                 <div class="panel-body text-left">
                     <tree ng-click="teste" nodes='treeNodesTrash'></tree>
