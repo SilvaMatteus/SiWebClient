@@ -13,12 +13,18 @@ class Folder(object):
         self.folders = []
         self.id = str(uuid.uuid4()).replace('-', '')
 
+    """ Add a document inside Folder """
+
     def add_document(self, document):
         self.documents.append(document)
+
+    """ Add a folder inside other folder """
 
     def add_folder(self, folder):
         self.folders.append(folder)
 
+    """ Search for a folder, if the folder doesn't exists return None, else return
+    the folder. """
 
     def find_folder(self, id_folder):
         if (self.id == id_folder):
@@ -30,6 +36,8 @@ class Folder(object):
                 return f
 
         return None
+
+    """ Search for a document """
 
     def find_document(self, document_id):
         for document in self.documents:
@@ -68,10 +76,13 @@ class Folder(object):
 
         return object
 
+    """ Delete a document """
+
     def delete_document(self, document_id):
         document = self.find_document(document_id)
         self.documents.remove(document)
 
+    """ Delete a folder """
 
     def delete_folder(self, folder_id):
         for folder in self.folders:

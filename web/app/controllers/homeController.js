@@ -361,6 +361,9 @@ function homeController($scope, $http, Session, $location, $state, notificationF
         });
     }
 
+    /*
+      Update the list of the deleted documents
+    */
     $scope.get_trash_documents = function () {
         $http({
             method: "GET",

@@ -29,6 +29,8 @@ class User(object):
         else:
             self.id = str(uuid.uuid4()).replace('-', '')
 
+    """ Get the user's data """
+
     def get_basic_data(self):
         return {
             'name': self.name,
@@ -44,17 +46,24 @@ class User(object):
             'token': self.generate_auth_token()
         }
 
+    """ Search for a folder, if folder doesn't exists raise Exception, else return
+    the folder. """
+
     def search_folder(self, folder_id):
         folder = self.folder.find_folder(folder_id)
         if (folder == None):
             raise Exception("Folder not founded")
         return folder
 
+    """ Search for a document """
+
     def search_document(self, document_id):
         document = self.folder.find_document(document_id)
         if (document == None):
             raise Exception("Document not found")
         return document
+
+    """ Delete a document, sending it to the trash """
 
     def delete_document(self, document_id):
         document = self.search_document(document_id)
@@ -63,9 +72,13 @@ class User(object):
             self.trash.append(document)
             self.folder.delete_document(document_id)
 
+    """ Add a document """
+
     def add_document(self, folder_id, document):
         folder = self.search_folder(folder_id)
         folder.add_document(document)
+
+    """ Edit a document """
 
     def edit_document(self, document_id, new_name, new_ext, new_content):
         document = self.search_document(document_id)
@@ -73,18 +86,26 @@ class User(object):
         document.content = new_content
         document.extension = new_ext
 
+    """ Update the content of the document """
+
     def update_content(self, content, document_id):
         document = self.search_document(document_id)
         document.content = content
+
+    """ Add folder """
 
     def user_add_folder(self, parent_folder_id, folder_name):
         parent_folder = self.search_folder(parent_folder_id)
         folder = Folder(folder_name)
         parent_folder.add_folder(folder)
 
+    """ Rename the folder """
+
     def rename_folder(self, folder_id, folder_new_name):
         folder = self.search_folder(folder_id)
         folder.name = folder_new_name
+
+    """ Delete a folder """
 
     def delete_folder(self, folder_id):
         self.folder.delete_folder(folder_id)
