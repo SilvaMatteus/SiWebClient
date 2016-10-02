@@ -296,3 +296,17 @@ def get_shared_documents(user_id, token):
         return json.dumps(shared_documents, default=default_parser), 200
     except Exception as e:
         return '%s' % (e), 404
+
+@user_blueprint.route("/trash/<string:user_id>/<string:token>", methods=['GET'])
+def get_trash_documents(user_id, token):
+    ''' Retrive all documets on trash
+    '''
+
+    if not check_token(token):
+        return 'Invalid token', 400
+
+    try:
+        trash_documents = user_repository.get_trash_documents(user_id)
+        return json.dumps(trash_documents, default=default_parser), 200
+    except Exception as e:
+        return '%s' % (e), 404

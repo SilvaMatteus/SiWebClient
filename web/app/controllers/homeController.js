@@ -181,6 +181,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showSuccess("Document deleted!", function () {
             });
             $scope.getFolders()
+            $scope.get_trash_documents()
 
         }, function myError(response) {
             if (response.data == "Invalid token") {
@@ -359,6 +360,25 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             }
         });
     }
+
+    $scope.get_trash_documents = function () {
+        $http({
+            method: "GET",
+            url: "http://127.0.0.1:5000/trash/" + $scope.userId + "/" + $scope.token
+        }).then(function mySucces(response) {
+            $scope.documents_trash = response.data
+            $scope.treeNodesTrash = response.data
+
+        }, function myError(response) {
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function () {});
+            }
+        });
+    }
+
     /*
      Update user's document
      */

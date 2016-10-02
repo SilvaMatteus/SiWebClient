@@ -19,6 +19,7 @@ class Document(object):
         self.extension = extension
         self.content = content
         self.ownerId = ownerId
+        self.boolean_trash = False
         self.id = str(uuid.uuid4()).replace('-', '')
         self.shareViewAndEdit = []
         self.shareView = []

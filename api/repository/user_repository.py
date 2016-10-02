@@ -235,6 +235,12 @@ class UserRepository(object):
         result = [documents, new_shares]
         return result
 
+    def get_trash_documents(self, user_id):
+        '''Find user and return the trash documents
+        '''
+        user = self.get(user_id)
+        return user.trash
+
     def save(self):
 
         db = Database('database')

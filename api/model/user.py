@@ -21,6 +21,7 @@ class User(object):
         self.password = password
         self.folder = Folder("root")
         self.shared_with_me = {}
+        self.trash = []
         self.new_shares = 0
 
         if id != "0":
@@ -56,7 +57,11 @@ class User(object):
         return document
 
     def delete_document(self, document_id):
-        return self.folder.delete_document(document_id)
+        document = self.search_document(document_id)
+        if (document.boolean_trash == False):
+            document.boolean_trash = True
+            self.trash.append(document)
+            self.folder.delete_document(document_id)
 
     def add_document(self, folder_id, document):
         folder = self.search_folder(folder_id)
