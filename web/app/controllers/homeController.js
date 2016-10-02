@@ -164,7 +164,10 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showError("Select a document to be deleted", function () {
             });
         } else {
-            $('#deleteWarningModal').modal('toggle');
+            if($scope.currentDocument.boolean_trash == false)
+                $('#deleteWarningModal').modal('toggle');
+            else
+                $('#deleteWarningModalTrash').modal('toggle');
         }
     }
 
@@ -175,13 +178,16 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             url: "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.token,
             data: {document_id: $scope.currentDocumentId}
         }).then(function mySucces(response) {
-            $scope.currentDocument.title = undefined
-            $scope.currentDocument.content = undefined
-            $scope.currentDocument.extension = undefined
-            notificationFactory.showSuccess("Document deleted!", function () {
-            });
-            $scope.getFolders()
-            $scope.get_trash_documents()
+
+            if($scope.currentDocument.boolean_trash == false)
+
+                $scope.currentDocument.title = undefined
+                $scope.currentDocument.content = undefined
+                $scope.currentDocument.extension = undefined
+                notificationFactory.showSuccess("Document deleted!", function () {
+                });
+                $scope.getFolders()
+                $scope.get_trash_documents()
 
         }, function myError(response) {
             if (response.data == "Invalid token") {
@@ -478,6 +484,8 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.currentDocument.ownerId = node.ownerId
             $scope.currentDocument.permission = node.permission
             $scope.currentDocument.boolean_trash = node.boolean_trash
+            console.log($scope.currentDocument);
+            console.log(node);
 
         }
     });

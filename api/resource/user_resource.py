@@ -148,6 +148,7 @@ def delete_document(user_id, token):
         user_repository.delete_document(**kwargs)
         return 'Document successfully deleted', 200
     except Exception as e:
+        print e
         return '%s' % (e), 404
 
 @user_blueprint.route("/document/<string:user_id>/<string:token>", methods=['PUT'])

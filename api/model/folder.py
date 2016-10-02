@@ -71,6 +71,7 @@ class Folder(object):
             d['content'] = document.content
             d['extension'] = document.extension
             d['ownerId'] = document.ownerId
+            d['boolean_trash'] = document.boolean_trash
 
             object['children'].append(d)
 

@@ -66,11 +66,21 @@ class User(object):
     """ Delete a document, sending it to the trash """
 
     def delete_document(self, document_id):
-        document = self.search_document(document_id)
-        if (document.boolean_trash == False):
-            document.boolean_trash = True
-            self.trash.append(document)
-            self.folder.delete_document(document_id)
+        try:
+            document = self.search_document(document_id)
+
+            if (document.boolean_trash == False):
+                document.boolean_trash = True
+                self.trash.append(document)
+                self.folder.delete_document(document_id)
+        except Exception as e:
+
+            document_trash = None
+            for document in self.trash:
+                if (document.id == document_id):
+                    document_trash = document
+            self.trash.remove(document_trash)
+
 
     """ Add a document """
 
