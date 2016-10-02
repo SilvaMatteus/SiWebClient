@@ -113,7 +113,7 @@ class User(object):
     def __repr__(self):
         return '%s: %s' % (self.name, self.email)
 
-    def generate_auth_token(self, expiration = 10):
+    def generate_auth_token(self, expiration = 86400):
         s = Serializer('AA2318AEE9BC58FE1B36599871283', expires_in=expiration)
         return s.dumps({'id': self.id})
 
