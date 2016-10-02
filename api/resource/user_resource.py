@@ -30,19 +30,19 @@ def list(token):
     except Exception as e:
         return '%s' % (e), 400
 
-@user_blueprint.route("/user/<string:id>/<string:token>", methods=['GET'])
-def get(id, token):
-    '''Get a specific user
-    '''
+#@user_blueprint.route("/user/<string:id>/<string:token>", methods=['GET'])
+#def get(id, token):
+ #   '''Get a specific user
+  #  '''
 
-    if not check_token(token):
-        return 'Invalid token', 400
+#    if not check_token(token):
+ #       return 'Invalid token', 400
 
-    try:
-        user = user_repository.get(id)
-        return json.dumps(user, default=default_parser), 200
-    except Exception as e:
-        return '%s' % (e), 400
+  #  try:
+   #     user = user_repository.get(id)
+    #    return json.dumps(user, default=default_parser), 200
+   # except Exception as e:
+    #    return '%s' % (e), 400
 
 @user_blueprint.route("/list-emails/<string:token>", methods=['GET'])
 def get_registered_emails(token):
