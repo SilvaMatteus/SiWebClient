@@ -379,7 +379,24 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     $scope.restoreTrash = function () {
+        $http({
+            method: "PUT",
+            url: "http://127.0.0.1:5000/trash/" + $scope.userId + "/" + $scope.token,
+            data: {
+                document_id: $scope.currentDocumentId
+            }
+        }).then(function mySucces(response) {
+            $scope.getFolders()
+            $scope.get_trash_documents()
 
+        }, function myError(response) {
+            if (response.data == "Invalid token") {
+                $scope.logout();
+                notificationFactory.showError("Token expired or invalid. Please log in again.", function () {});
+            } else {
+                notificationFactory.showError("Unable to retrieve shared documents! Try logging again.", function () {});
+            }
+        });
     }
 
     /*

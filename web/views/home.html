@@ -14,10 +14,10 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Document<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-click="newCreateModal()"><a href="#">New<span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span></a></li>
-                        <li ng-hide="currentDocument.permission=='read'" ng-click="editModalHandle()"><a href="#">Edit<span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-hide="currentDocument.boolean_trash!=False" ng-click="(newCreateModal())"><a href="#">New<span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-hide="(currentDocument.permission=='read' || currentDocument.boolean_trash!=False)" ng-click="editModalHandle()"><a href="#">Edit<span class="glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span></a></li>
                         <li ng-click="showWarningToDelete()"><a href="#">Delete<span class="glyphicon glyphicon-minus pull-right" aria-hidden="true"></span></a></li>
-                        <li ng-hide="currentDocument.permission!=undefined" ng-click="newShareModal()"><a href="#">Share<span class="glyphicon glyphicon-globe pull-right" aria-hidden="true"></span></a></li>
+                        <li ng-hide="(currentDocument.permission!=undefined || currentDocument.boolean_trash!=False)" ng-click="newShareModal()"><a href="#">Share<span class="glyphicon glyphicon-globe pull-right" aria-hidden="true"></span></a></li>
                         <li ng-hide="currentDocument.boolean_trash==False" ng-click="restoreTrash()"><a href="#">Restore<span class="glyphicon glyphicon-repeat pull-right" aria-hidden="true"></span></a></li>
                     </ul>
                 </li>

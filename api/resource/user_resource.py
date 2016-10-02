@@ -310,3 +310,18 @@ def get_trash_documents(user_id, token):
         return json.dumps(trash_documents, default=default_parser), 200
     except Exception as e:
         return '%s' % (e), 404
+
+@user_blueprint.route("/trash/<string:user_id>/<string:token>", methods=['PUT'])
+def restore_trash_document(user_id, token):
+
+    if not check_token(token):
+        return 'Invalid token', 400
+
+    try:
+        kwargs = json.loads(request.data.decode('utf-8'))
+        kwargs["user_id"] = user_id
+        trash_documents = user_repository.restore_trash_document(**kwargs)
+        return "Trash restored",200
+    except Exception as e:
+        print e
+        return '%s' % (e), 404

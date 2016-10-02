@@ -38,7 +38,8 @@ class UserRepository(object):
 
             # Creating a user default to make easy the development
             user = User('Fulano', 'email@email.com', 'pwd', "uid")
-            document = Document("My document", ".txt", "I think to myself... what a wonderful world!", "uid")
+
+            document = Document("My document", ".txt", "I think to myself... what a wonderful world!", "uid", user.folder.id)
             document.id = "did"
             user.folder.id = "fid"
             user.add_document(user.folder.id, document)
@@ -144,8 +145,8 @@ class UserRepository(object):
         ''' Find an user and add a new document to it
         '''
         user = self.get(user_id)
-        documment = Document(document_name, document_ext, document_content, user_id)
-        user.add_document(folder_id, documment)
+        document = Document(document_name, document_ext, document_content, user_id, folder_id)
+        user.add_document(folder_id, document)
         self.save()
 
     def edit_document(self, user_id, document_name, document_ext, document_content, document_id):
@@ -240,6 +241,12 @@ class UserRepository(object):
         '''
         user = self.get(user_id)
         return user.trash
+
+    def restore_trash_document(self, user_id, document_id):
+        user = self.get(user_id)
+        document_to_restore = user.get_and_delete_trash(document_id)
+        user.add_document(document_to_restore.folderId, document_to_restore)
+        self.save()
 
     def save(self):
 

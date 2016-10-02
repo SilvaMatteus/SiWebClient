@@ -69,9 +69,8 @@ class Folder(object):
         return object
 
     def delete_document(self, document_id):
-        for document in self.documents:
-            if document_id == document.id:
-                self.documents.remove(document)
+        document = self.find_document(document_id)
+        self.documents.remove(document)
 
 
     def delete_folder(self, folder_id):

@@ -9,7 +9,7 @@ class Document(object):
     """ Object that represents a document of Reader
     """
 
-    def __init__(self, name, extension, content, ownerId):
+    def __init__(self, name, extension, content, ownerId, folderId):
         """ Constructor of Document.
         Document has a name, an extension(.txt/.md), a contend, an ownerId, a exclusive id
         Docment has two list of userIds to control witch user can read or write the document
@@ -19,6 +19,7 @@ class Document(object):
         self.extension = extension
         self.content = content
         self.ownerId = ownerId
+        self.folderId = folderId
         self.boolean_trash = False
         self.id = str(uuid.uuid4()).replace('-', '')
         self.shareViewAndEdit = []
