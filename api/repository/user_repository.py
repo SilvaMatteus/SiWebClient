@@ -245,7 +245,6 @@ class UserRepository(object):
     def restore_trash_document(self, user_id, document_id):
         user = self.get(user_id)
         document_to_restore = user.restore_trash(document_id)
-        document_to_restore.trash = False
         user.add_document(document_to_restore.folderId, document_to_restore)
         self.save()
 

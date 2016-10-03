@@ -140,6 +140,7 @@ class User(object):
         '''
         for document in self.trash:
             if (document.id == document_id):
+                document.boolean_trash = False
                 self.trash.remove(document)
                 return document
 
