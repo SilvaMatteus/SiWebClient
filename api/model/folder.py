@@ -29,13 +29,10 @@ class Folder(object):
     def find_folder(self, id_folder):
         if (self.id == id_folder):
             return self
-
+        f = None
         for folder in self.folders:
             f = folder.find_folder(id_folder)
-            if f != None:
-                return f
-
-        return None
+        return f
 
     """ Search for a document """
 
@@ -43,11 +40,10 @@ class Folder(object):
         for document in self.documents:
             if document.id == document_id:
                 return document
+        d = None
         for folder in self.folders:
             d = folder.find_document(document_id)
-            if d != None:
-                return d
-        return None
+        return d
 
     def to_json_tree(self):
         ''' Return the folders in a node format
@@ -80,8 +76,12 @@ class Folder(object):
     """ Delete a document """
 
     def delete_document(self, document_id):
-        document = self.find_document(document_id)
-        self.documents.remove(document)
+        for document in self.documents:
+            if document.id == document_id:
+                self.documents.remove(document)
+        for folder in self.folders:
+            folder.delete_document(document_id)
+
 
     """ Delete a folder """
 

@@ -105,22 +105,22 @@ function homeController($scope, $http, Session, $location, $state, notificationF
     }
 
     /*
-     Edit user document
+     Handle modal to be shown to edit document
      */
-    $scope.newEditModal = function () {
+    $scope.editModalHandle = function () {
 
-        if ($scope.currentDocumentId == undefined) {
-            notificationFactory.showError("Select a document to be edited", function () {
+        if ($scope.currentDocument.boolean_trash == true) {
+            notificationFactory.showError("You can't edit trash!", function () {
             });
-        } else {
-            $scope.documentToEdit = {}
-            $scope.documentToEdit.document_name = $scope.currentDocument.title
-            $scope.documentToEdit.document_content = $scope.currentDocument.content
-            $scope.documentToEdit.document_ext = $scope.currentDocument.extension
-            $('#newEditModal').modal('toggle');
+            return;
         }
 
+        if ($scope.currentDocument.permission == undefined)
+            $('#newEditModal').modal('toggle');
+        if ($scope.currentDocument.permission == 'write')
+            $('#editSharedDocumentModal').modal('toggle');
     }
+
 
     /*
      Update the user's document
@@ -164,30 +164,34 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             notificationFactory.showError("Select a document to be deleted", function () {
             });
         } else {
-            if($scope.currentDocument.boolean_trash == false)
+            if($scope.currentDocument.boolean_trash == false){
                 $('#deleteWarningModal').modal('toggle');
-            else
+            }
+            else{
                 $('#deleteWarningModalTrash').modal('toggle');
+            }
         }
     }
 
     $scope.deleteDocument = function () {
-        $('#deleteWarningModal').modal('toggle');
+        if($scope.currentDocument.boolean_trash == false){
+            $('#deleteWarningModal').modal('toggle');
+        }
+        else{
+            $('#deleteWarningModalTrash').modal('toggle');
+        }
         $http({
             method: "DELETE",
             url: "http://127.0.0.1:5000/document/" + $scope.userId + "/" + $scope.token,
             data: {document_id: $scope.currentDocumentId}
         }).then(function mySucces(response) {
 
-            if($scope.currentDocument.boolean_trash == false)
-
-                $scope.currentDocument.title = undefined
-                $scope.currentDocument.content = undefined
-                $scope.currentDocument.extension = undefined
-                notificationFactory.showSuccess("Document deleted!", function () {
-                });
-                $scope.getFolders()
-                $scope.get_trash_documents()
+            $scope.currentDocument.title = undefined
+            $scope.currentDocument.content = undefined
+            $scope.currentDocument.extension = undefined
+            notificationFactory.showSuccess("Document deleted!", function () {});
+            $scope.getFolders()
+            $scope.get_trash_documents()
 
         }, function myError(response) {
             if (response.data == "Invalid token") {
@@ -310,6 +314,7 @@ function homeController($scope, $http, Session, $location, $state, notificationF
      Show share document modal
      */
     $scope.newShareModal = function () {
+
         if ($scope.currentDocumentId == undefined) {
             notificationFactory.showError("Select a document to be shared", function () {
             });
@@ -484,28 +489,10 @@ function homeController($scope, $http, Session, $location, $state, notificationF
             $scope.currentDocument.ownerId = node.ownerId
             $scope.currentDocument.permission = node.permission
             $scope.currentDocument.boolean_trash = node.boolean_trash
-            console.log($scope.currentDocument);
-            console.log(node);
-
         }
     });
 
-    /*
-     Handle modal to be shown to edit document
-     */
-    $scope.editModalHandle = function () {
 
-        if ($scope.currentDocumentId == undefined) {
-            notificationFactory.showError("Select a document to be edited!", function () {
-            });
-            return;
-        }
-
-        if ($scope.currentDocument.permission == undefined)
-            $('#newEditModal').modal('toggle');
-        if ($scope.currentDocument.permission == 'write')
-            $('#editSharedDocumentModal').modal('toggle');
-    }
 
 
 }
