@@ -135,7 +135,7 @@ class User(object):
         self.shared_with_me[user_id].remove([document_id, permission])
         self.shared_with_me[user_id].append([document_id, change_permission])
 
-    def get_and_delete_trash(self, document_id):
+    def restore_trash(self, document_id):
         ''' Retur and delete from trash a document with a document id
         '''
         for document in self.trash:
